@@ -58,8 +58,8 @@ public class FindFragment extends Fragment {
 
     private void initData() {
         names = new ArrayList<>();
-        names.add("平均1");
-        names.add("平均2");
-        names.add("平均3");
+        names.add("教学视频");
+        names.add("预约教练");
+        names.add("论坛");
     }
 }

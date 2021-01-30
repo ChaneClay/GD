@@ -14,13 +14,18 @@
         app:tabBackground="@color/white"
         app:tabIndicatorColor="@color/menu_green"
         app:tabIndicatorHeight="1dip"
-        app:tabMinWidth="40dip"
+        app:tabMinWidth="90dip"
         app:tabMode="scrollable"
         app:tabPaddingEnd="5dip"
         app:tabPaddingStart="5dip"
         app:tabSelectedTextColor="@color/wx_head_selected"
         app:tabTextAppearance="@style/tab_head"
         app:tabTextColor="@color/wx_head_default" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/black"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

@@ -29,6 +29,7 @@ public class MsgContentFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle bundle = getArguments();
+        System.out.println("MsgContentFragment");
         name = bundle.getString("name");
         if (name == null){
             name = "参数非法";

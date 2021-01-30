@@ -63,17 +63,17 @@ public class MsgFragment extends Fragment {
         names.add("推荐");
         names.add("热点");
         names.add("视频");
-        names.add("小说");
-        names.add("娱乐");
-        names.add("问答");
-        names.add("图片");
-        names.add("科技");
-        names.add("懂车帝");
-        names.add("体育");
-        names.add("财经");
-        names.add("军事");
-        names.add("国际");
-        names.add("健康");
+//        names.add("小说");
+//        names.add("娱乐");
+//        names.add("问答");
+//        names.add("图片");
+//        names.add("科技");
+//        names.add("懂车帝");
+//        names.add("体育");
+//        names.add("财经");
+//        names.add("军事");
+//        names.add("国际");
+//        names.add("健康");
     }
 
 }
