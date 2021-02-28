@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TableLayout;
 
 import com.dgut.dg.Adapter.MsgContentFragmentAdapter;
+import com.dgut.dg.Adapter.VideoTutorialFragmentAdapter;
 import com.dgut.dg.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -28,7 +29,7 @@ public class FindFragment extends Fragment {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    private MsgContentFragmentAdapter adapter;
+    private VideoTutorialFragmentAdapter adapter;
     private List<String> names;
 
 
@@ -47,11 +48,13 @@ public class FindFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_find, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new MsgContentFragmentAdapter(getChildFragmentManager());
+
+        adapter = new VideoTutorialFragmentAdapter(getChildFragmentManager());
+
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-
         adapter.setList(names);
+
         return view;
 
     }

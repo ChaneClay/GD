@@ -35,4 +35,6 @@ tools:context=".Fragment.FindFragment">
     android:layout_marginTop="10dip"
     android:layout_weight="1"
     android:background="@color/white" />
+
+
 </LinearLayout>

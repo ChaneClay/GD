@@ -1,6 +1,7 @@
 package com.dgut.dg.Adapter;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.dgut.dg.Fragment.MsgContentFragment;
+import com.dgut.dg.Fragment.VideoTutorialFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,11 @@ public class MsgContentFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
+        System.out.println("----------"+position);
+
+
         MsgContentFragment fragment = new MsgContentFragment();
         Bundle bundle = new Bundle();
-        System.out.println("MsgContentFragmentAdapter");
-
         bundle.putString("name", names.get(position));
         fragment.setArguments(bundle);
         return fragment;

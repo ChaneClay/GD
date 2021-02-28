@@ -62,8 +62,10 @@ public class HomeActivity extends AppCompatActivity {
 
             TextView tvTitle = (TextView) view.findViewById(R.id.txt_tab);
             tvTitle.setText(tabTitlees[i]);
+
             ImageView imgTab = (ImageView) view.findViewById(R.id.img_tab);
             imgTab.setImageResource(tabImgs[i]);
+
             tabLayout.addTab(tab);
         }
 
@@ -73,6 +75,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void initPager(){
+
+        // ViewPager是一个容器，该组件所显示的内容由它的Adapter提供，因此使用ViewPager必须为它设置一个Adapter
+        // ViewPager需要设置一个Adapter，该Adapter需要返回不同的fragment（比如页面切换）
 
         adapter = new MainFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
