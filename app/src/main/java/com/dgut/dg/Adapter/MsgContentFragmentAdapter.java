@@ -27,6 +27,9 @@ public class MsgContentFragmentAdapter extends FragmentPagerAdapter {
     public void setList(List<String> datas){
         this.names.clear();
         this.names.addAll(datas);
+
+        // 有时候我们需要修改已经生成的列表，添加或者修改数据，notifyDataSetChanged()
+        // 可以在修改适配器绑定的数组后，不用重新刷新Activity，通知Activity更新ListView。
         notifyDataSetChanged();
     }
 
@@ -35,12 +38,14 @@ public class MsgContentFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        System.out.println("----------"+position);
-
 
         MsgContentFragment fragment = new MsgContentFragment();
         Bundle bundle = new Bundle();
+//        内容
         bundle.putString("name", names.get(position));
+//        bundle.putString("name", position+"");
+
+
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -49,6 +54,7 @@ public class MsgContentFragmentAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return names.size();
     }
+
 
     @Nullable
     @Override

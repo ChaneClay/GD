@@ -23,7 +23,6 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        System.out.println("**********"+position);
 
         Fragment fragment = null;
         switch (position){

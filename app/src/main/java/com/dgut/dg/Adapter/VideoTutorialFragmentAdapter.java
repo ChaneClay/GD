@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.dgut.dg.Fragment.MsgContentFragment;
 import com.dgut.dg.Fragment.VideoTutorialFragment;
 
 import java.util.ArrayList;
@@ -34,7 +35,25 @@ public class VideoTutorialFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        VideoTutorialFragment fragment = new VideoTutorialFragment();
+        Fragment fragment = null;
+
+        switch (position){
+            case 0:
+                fragment = new VideoTutorialFragment();
+                System.out.println("--"+0);
+                break;
+            case 1:
+                fragment = new MsgContentFragment();
+                System.out.println("--"+1);
+
+                break;
+            case 2:
+                fragment = new MsgContentFragment();
+                break;
+        }
+
+
+
         Bundle bundle = new Bundle();
         bundle.putString("name", names.get(position));
 
