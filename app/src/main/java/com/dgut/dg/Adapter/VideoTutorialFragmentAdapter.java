@@ -1,6 +1,7 @@
 package com.dgut.dg.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.dgut.dg.Fragment.MsgContentFragment;
 import com.dgut.dg.Fragment.VideoTutorialFragment;
+import com.dgut.dg.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
