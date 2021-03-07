@@ -979,6 +979,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.i(TAG, "backPress");
         if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoScreenNormal();
+            Log.i(TAG, "backPress: 退出全屏");
             return true;
         } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen != SCREEN_NORMAL) {//退出直接进入的全屏
             CURRENT_JZVD.clearFloatScreen();

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dgut.dg.Adapter.VideoDetailRecyclerViewAdapter;
 import com.dgut.dg.R;
@@ -48,26 +49,34 @@ public class VideoTutorialFragment extends Fragment {
 
             if (msg.what == 0x123){
                 String json = (String) msg.obj;
+                Log.i(TAG, "handleMessage: json content" + json);
                 Log.i(TAG, "***handleMessage: 3");
 
                 // 解析数据
                 VideoBean videoBean = new Gson().fromJson(json, VideoBean.class);
+                // 避免网络问题，导致获取不到数据而报错
+                if (videoBean != null){
+                    // 过滤数据
+                    List<VideoBean.ItemListBean> itemList = videoBean.getItemList();
 
+                    for (int i = 0; i <itemList.size() ; i++) {
+                        VideoBean.ItemListBean listBean = itemList.get(i);
+                        if(listBean != null){
+                            if (listBean.getType().equals("video")) {
+                                mDatas.add(listBean);
+                                System.out.println("-------------------");
+                                System.out.println(listBean);
+                                System.out.println("-------------------");
 
-                // 过滤数据
-                List<VideoBean.ItemListBean> itemList = videoBean.getItemList();
-
-
-                for (int i = 0; i <itemList.size() ; i++) {
-                    VideoBean.ItemListBean listBean = itemList.get(i);
-                    if(listBean != null){
-                        if (listBean.getType().equals("video")) {
-                            mDatas.add(listBean);
-                            Log.i(TAG, "***handleMessage: 4");
+                                Log.i(TAG, "***handleMessage: 4");
+                            }
                         }
-                    }
 
+                    }
+                }else {
+                    Log.i(TAG, "handleMessage: 获取数据失败！");
                 }
+
 
                 // 提示适配器更新数据
                 adapter.notifyDataSetChanged();
@@ -109,7 +118,6 @@ public class VideoTutorialFragment extends Fragment {
 
 
         recyclerView.setAdapter(adapter);
-
 
 
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {

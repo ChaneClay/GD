@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<!--    要把播放器放在布局里面，否则无法退出全屏-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <cn.jzvd.JzvdStd
+            android:id="@+id/jz_video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_marginTop="10dp"
+        android:translationZ="20dp"
+        android:background="@color/gray_text_dark"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+
+    <Button
+        android:id="@+id/btn_subscribe"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="订阅"/>
+
+</LinearLayout>
