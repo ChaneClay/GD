@@ -37,7 +37,6 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
 
 
     public VideoDetailRecyclerViewAdapter(Context context, List<VideoBean.ItemListBean> mDatas) {
-        Log.i(TAG, "VideoDetailRecyclerViewAdapter: in construct");
         this.context = context;
         this.mDatas = mDatas;
     }
@@ -59,13 +58,6 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
 
-        Log.i(TAG, "onBindViewHolder: mdatas content*" + this.mDatas);
-
-
-//        JzvdStd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;  //横向
-//        JzvdStd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;  //纵向
-
-
         if (mDatas.size() > 0){
             Log.i(TAG, "***onBindViewHolder: 5");
             VideoBean.ItemListBean.DataBean dataBean = mDatas.get(position).getData();
@@ -75,10 +67,12 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
             Glide.with(holder.jzvdStd.getContext()).load(thumbUrl).into(holder.jzvdStd.thumbImageView);
 
 
+            Log.i(TAG, "onBindViewHolder: -- position" + position);
+            Log.i(TAG, "onBindViewHolder: --" + dataBean.getPlayUrl());
+
             // 设置时间
             long before = dataBean.getDate();
             String result = new SimpleDateFormat("HH").format(before);
-            Log.i(TAG, "onBindViewHolder: result " + result);
             holder.tvTime.setText(Integer.parseInt(result)+"h");
 
             // 设置图片
@@ -106,7 +100,6 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
 
 
     }
-
 
 
 

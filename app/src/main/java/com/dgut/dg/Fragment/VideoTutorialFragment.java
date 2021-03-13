@@ -37,7 +37,7 @@ public class VideoTutorialFragment extends Fragment {
     VideoDetailRecyclerViewAdapter adapter;
 
     List<VideoBean.ItemListBean> mDatas;
-    String url = "http://baobab.kaiyanapp.com/api/v4/tabs/selected?udid=11111&vc=168&vn=3.3.1&deviceModel=Huawei6&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=20";
+
 
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
@@ -45,30 +45,26 @@ public class VideoTutorialFragment extends Fragment {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
 
-            Log.i(TAG, "***handleMessage: 2");
 
             if (msg.what == 0x123){
                 String json = (String) msg.obj;
-                Log.i(TAG, "handleMessage: json content" + json);
-                Log.i(TAG, "***handleMessage: 3");
 
                 // 解析数据
                 VideoBean videoBean = new Gson().fromJson(json, VideoBean.class);
+
                 // 避免网络问题，导致获取不到数据而报错
                 if (videoBean != null){
+
                     // 过滤数据
                     List<VideoBean.ItemListBean> itemList = videoBean.getItemList();
+
 
                     for (int i = 0; i <itemList.size() ; i++) {
                         VideoBean.ItemListBean listBean = itemList.get(i);
                         if(listBean != null){
                             if (listBean.getType().equals("video")) {
                                 mDatas.add(listBean);
-                                System.out.println("-------------------");
-                                System.out.println(listBean);
-                                System.out.println("-------------------");
 
-                                Log.i(TAG, "***handleMessage: 4");
                             }
                         }
 
@@ -89,12 +85,12 @@ public class VideoTutorialFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        Log.i(TAG, "***onCreate: 0");
         super.onCreate(savedInstanceState);
 
+        String url = "http://baobab.kaiyanapp.com/api/v4/tabs/selected?date=1614733200000&num=2&page=1";
         mDatas = new ArrayList<>();
-        loadData();
 
+        loadData(url);
 
     }
 
@@ -106,10 +102,6 @@ public class VideoTutorialFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_video_tutorial, container, false);
 
 
-
-        Log.i(TAG, "onCreateView: loadData size"+mDatas.size());
-
-        Log.i(TAG, "***onCreateView: 6");
         adapter = new VideoDetailRecyclerViewAdapter(getActivity(), mDatas);
 
 
@@ -145,7 +137,7 @@ public class VideoTutorialFragment extends Fragment {
         return view;
     }
 
-    private void loadData() {
+    private void loadData(String url) {
         // 创建新线程，完成数据的获取
         new Thread(new Runnable() {
             @Override
@@ -154,12 +146,8 @@ public class VideoTutorialFragment extends Fragment {
 
                 String jsonContent = HttpUtils.getJsonContent(url);
 
-                if (jsonContent.length() != 0){
-                    Log.i(TAG, "run: jsonContent.length is not null");
-                }
 
                 // 子线程不能更新UI， 需要Handler发送数据到主线程
-
                 Message message = new Message();   // 发送的消息对象
                 message.what = 0x123;
                 message.obj = jsonContent;

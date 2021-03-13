@@ -21,6 +21,8 @@ public class VideoDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_video_details);
 
         Intent intent = getIntent();
@@ -39,6 +41,7 @@ public class VideoDetailsActivity extends AppCompatActivity {
 
 
     }
+
 
 
     @Override

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dgut.dg.Adapter.MsgContentFragmentAdapter;
+import com.dgut.dg.Adapter.NewsAdapter;
 import com.dgut.dg.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -27,10 +28,8 @@ public class MsgFragment extends Fragment {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    private MsgContentFragmentAdapter adapter;
+    private NewsAdapter adapter;
     private List<String> names;
-
-
 
 
 
@@ -50,7 +49,9 @@ public class MsgFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_msg, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new MsgContentFragmentAdapter(getChildFragmentManager());
+//        adapter = new MsgContentFragmentAdapter(getChildFragmentManager());
+        adapter = new NewsAdapter(getChildFragmentManager());
+
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -64,17 +65,6 @@ public class MsgFragment extends Fragment {
         names.add("推荐");
         names.add("热点");
         names.add("视频");
-//        names.add("小说");
-//        names.add("娱乐");
-//        names.add("问答");
-//        names.add("图片");
-//        names.add("科技");
-//        names.add("懂车帝");
-//        names.add("体育");
-//        names.add("财经");
-//        names.add("军事");
-//        names.add("国际");
-//        names.add("健康");
     }
 
 }

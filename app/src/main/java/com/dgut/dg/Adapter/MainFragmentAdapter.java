@@ -16,9 +16,7 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
     }
 
 
-    // 根据不同的参数，返回不同的fragment
 
-    // position哪里传过来的？
 
     @Override
     public Fragment getItem(int position) {
