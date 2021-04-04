@@ -2,25 +2,23 @@ package com.dgut.dg.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.dgut.dg.Activity.ShopDetailsActivity;
-import com.dgut.dg.Activity.VideoDetailsActivity;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.CommonRes;
-import com.dgut.dg.Utils.VideoBean;
-
-import java.util.List;
-import java.util.zip.Inflater;
+import com.dgut.dg.Utils.ScreenUtils;
 
 
 public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDetailRecyclerViewAdapter.LinearViewHolder> {
@@ -40,6 +38,8 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
     @NonNull
     @Override
     public LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
         return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_shopview, parent, false));
 
     }
@@ -47,15 +47,22 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
     @Override
     public void onBindViewHolder(@NonNull LinearViewHolder holder, int position) {
 
-        initData();
-
-        // 设置图片资源
-        int[] images = new int[]{R.mipmap.image1, R.mipmap.image2, R.mipmap.image3, R.mipmap.image4};
-
-        CommonRes.setImages(images);
 
         int num = position % CommonRes.getImages().length;
-        holder.mIv_shop.setImageResource(CommonRes.getImages()[num]);
+
+        ViewGroup.LayoutParams layoutParams = holder.mIv_shop.getLayoutParams();
+        float itemWidth = (ScreenUtils.getScreenWidth(mContext) - 16*3) / 2;
+        layoutParams.width = (int) itemWidth;
+        float scale = (itemWidth+0f)/CommonRes.getImages()[num][1];
+        layoutParams.height= (int) (CommonRes.getImages()[num][2]*scale);
+        holder.mIv_shop.setLayoutParams(layoutParams);
+
+
+
+        Glide.with(mContext).
+                load(CommonRes.getImages()[num][0]).
+                override(layoutParams.width, layoutParams.height).
+                into(holder.mIv_shop);
 
 
 
@@ -80,15 +87,11 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
 
     }
 
-    private void initData() {
-
-
-    }
 
 
     @Override
     public int getItemCount() {
-        return 30;
+        return CommonRes.getImages().length * 2;
     }
 
     class LinearViewHolder extends RecyclerView.ViewHolder{

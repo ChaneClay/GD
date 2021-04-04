@@ -32,7 +32,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
 
         mIvShop = findViewById(R.id.iv_shop);
-        mIvShop.setImageResource(CommonRes.getImages()[id]);
+        mIvShop.setImageResource(CommonRes.getImages()[id][0]);
 
 
         mBtBuy = findViewById(R.id.bt_buy);
