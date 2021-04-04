@@ -59,7 +59,6 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
 
 
         if (mDatas.size() > 0){
-            Log.i(TAG, "***onBindViewHolder: 5");
             VideoBean.ItemListBean.DataBean dataBean = mDatas.get(position).getData();
             String thumbUrl = dataBean.getCover().getFeed();    // 缩略图地址
 

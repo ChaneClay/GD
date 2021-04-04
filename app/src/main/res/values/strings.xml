@@ -6,6 +6,6 @@
     <string name="menu_msg">资讯</string>
     <string name="menu_contact">商城</string>
     <string name="menu_find">社区</string>
-    <string name="menu_me">我</string>
+    <string name="menu_me">个人资料</string>
 
 </resources>

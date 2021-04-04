@@ -61,8 +61,8 @@ public class MsgFragment extends Fragment {
 
     private void initData() {
         names = new ArrayList<>();
-        names.add("关注");
         names.add("推荐");
+        names.add("关注");
         names.add("热点");
         names.add("视频");
     }

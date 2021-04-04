@@ -17,18 +17,11 @@
 
 
 
-    <View
-        android:layout_marginTop="10dp"
-        android:translationZ="20dp"
-        android:background="@color/gray_text_dark"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
-
 
     <Button
         android:id="@+id/btn_subscribe"
         android:layout_marginTop="30dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/btn_login_selector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="订阅"/>

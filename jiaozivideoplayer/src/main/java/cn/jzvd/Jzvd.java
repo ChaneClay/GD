@@ -189,13 +189,16 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 }
                 startVideo();
             } else if (state == STATE_PLAYING) {
+                Log.i(TAG, "onClick: ------------ 0 ");
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 mediaInterface.pause();
                 onStatePause();
             } else if (state == STATE_PAUSE) {
+                Log.i(TAG, "onClick: ------------ 1 ");
                 mediaInterface.start();
                 onStatePlaying();
             } else if (state == STATE_AUTO_COMPLETE) {
+                Log.i(TAG, "onClick: ------------ 2 ");
                 startVideo();
             }
         } else if (i == R.id.fullscreen) {
@@ -314,6 +317,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     dismissVolumeDialog();
                     dismissBrightnessDialog();
                     if (mChangePosition) {
+
+                        Log.i(TAG, "onTouch: 快进了。。。。。。。。");
                         mediaInterface.seekTo(mSeekTimePosition);
                         long duration = getDuration();
                         int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
@@ -513,6 +518,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
+        Log.i(TAG, "startVideo: 视频播放了");
         setCurrentJzvd(this);
         try {
             Constructor<JZMediaInterface> constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
@@ -534,6 +540,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         onStatePreparing();
     }
+    
 
     public void changeUrl(String url, String title, long seekToInAdvance) {
         changeUrl(new JZDataSource(url, title), seekToInAdvance);
@@ -630,7 +637,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void onProgress(int progress, long position, long duration) {
-//        Log.d(TAG, "onProgress: progress=" + progress + " position=" + position + " duration=" + duration);
+        Log.d(TAG, "onProgress: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (seekToManulPosition != -1) {
                 if (seekToManulPosition > progress) {
@@ -656,6 +663,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         currentTimeTextView.setText(JZUtils.stringForTime(0));
         totalTimeTextView.setText(JZUtils.stringForTime(0));
     }
+
+
 
     public long getCurrentPositionWhenPlaying() {
         long position = 0;
@@ -707,6 +716,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         long time = seekBar.getProgress() * getDuration() / 100;
         seekToManulPosition = seekBar.getProgress();
         mediaInterface.seekTo(time);
+        Log.i(TAG, "onStopTrackingTouch: 快进了");
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
 
@@ -945,6 +955,36 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         startFullscreenDirectly(context, _class, new JZDataSource(url, title));
     }
 
+    //自定义
+//    public static void startAutoPlay(Context context, Class _class, String url, String title) {
+//        startAutoPlay(context, _class, new JZDataSource(url, title));
+//    }
+
+
+    // 自定义
+    // 因为在这里操作的视频Jzvd并不是视图里面的，所以会导致视频播放没有在设置的位置里，所以先要获取它
+//    public static void startAutoPlay(Context context, Class _class, JZDataSource jzDataSource){
+////        JZUtils.hideStatusBar(context);
+//        JZUtils.setRequestedOrientation(context, NORMAL_ORIENTATION);
+////        JZUtils.hideSystemUI(context);
+//
+//        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
+//        try {
+//            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
+//            final Jzvd jzvd = constructor.newInstance(context);
+//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+//                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            vp.addView(jzvd, lp);
+//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL);
+//            jzvd.startVideo();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
     public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
         JZUtils.hideStatusBar(context);
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
@@ -968,7 +1008,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
 
     public static void releaseAllVideos() {
-        Log.d(TAG, "releaseAllVideos");
         if (CURRENT_JZVD != null) {
             CURRENT_JZVD.reset();
             CURRENT_JZVD = null;

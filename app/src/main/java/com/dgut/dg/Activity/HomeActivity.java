@@ -4,16 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Person;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dgut.dg.Adapter.MainFragmentAdapter;
 import com.dgut.dg.R;
+import com.dgut.dg.Utils.DatabaseHelper;
+import com.dgut.dg.Utils.PersonalMes;
+import com.dgut.dg.Utils.RandomData;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -29,6 +36,9 @@ public class HomeActivity extends AppCompatActivity {
     private final int[] TAB_IMGS = new int[]{R.drawable.tab_main_msg_selector, R.drawable.tab_main_contact_selector, R.drawable.tab_main_find_selector
             , R.drawable.tab_main_me_selector};
 
+
+    String TAG = "HomeActivity";
+
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
@@ -39,17 +49,101 @@ public class HomeActivity extends AppCompatActivity {
 
     private long exitTime;
 
+    private SQLiteDatabase db;
 
 
+
+    // 当第一次创建数据库时回调该方法
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         ButterKnife.bind(this);
+
+        // 数据库操作
+        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this, "user_db", null, 1);
+        db = dbHelper.getWritableDatabase();
+
+        insertData();
 
         initPager();
         setTabs(tabLayout, getLayoutInflater(), TAB_TITLES, TAB_IMGS);
+
+    }
+
+
+    public void insertData(){
+
+        // 登陆的邮箱
+        String email = PersonalMes.getEmail();
+
+        String query = new StringBuilder().append("select * from user where email = '")
+                .append(email).append("'").toString();
+        Cursor cursor = db.rawQuery(query, null);
+
+        String result = "";
+        boolean flag = false;
+
+        while (cursor.moveToNext()){
+            result =  cursor.getString(cursor.getColumnIndex("email"));
+            if (result.equals(email)){
+                // 旧用户
+                PersonalMes.setName(cursor.getString(cursor.getColumnIndex("name")));
+                PersonalMes.setGender(cursor.getString(cursor.getColumnIndex("gender")));
+                PersonalMes.setAge(cursor.getInt(cursor.getColumnIndex("age")));
+                PersonalMes.setHeight(cursor.getDouble(cursor.getColumnIndex("height")));
+                PersonalMes.setWeight(cursor.getDouble(cursor.getColumnIndex("weight")));
+
+                flag = true;
+                break;
+            }
+        }
+
+        // 新用户
+        if (!flag){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ContentValues contentValues = new ContentValues();
+
+                    // 默认邮箱
+                    if (email == "" || email == null){
+                        PersonalMes.setEmail("893461@qq.com");
+                    }
+
+                    // 用户名
+                    PersonalMes.setName(new RandomData().getRandomString());
+
+                    // 性别
+                    PersonalMes.setGender("male");
+
+                    // 年龄
+                    PersonalMes.setAge(18);
+
+                    // 身高
+                    PersonalMes.setHeight(175.0);
+                    // 体重
+                    PersonalMes.setWeight(65);
+
+
+                    contentValues.put("email", email);
+                    contentValues.put("name", PersonalMes.getName());
+                    contentValues.put("gender", PersonalMes.getGender());
+                    contentValues.put("age", PersonalMes.getAge());
+                    contentValues.put("height", PersonalMes.getHeight());
+                    contentValues.put("weight", PersonalMes.getWeight());
+
+                    db.insert("user", null, contentValues);
+
+
+                }
+            }).run();
+        }
+
+
+
 
     }
 
@@ -68,8 +162,6 @@ public class HomeActivity extends AppCompatActivity {
 
             tabLayout.addTab(tab);
         }
-
-
 
     }
 
@@ -121,8 +213,6 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
-
 
 
 

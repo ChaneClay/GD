@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dgut.dg.Adapter.MsgContentFragmentAdapter;
+import com.dgut.dg.Adapter.ShopAdapter;
 import com.dgut.dg.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -29,7 +30,7 @@ public class ContactFragment extends Fragment {
     ViewPager viewPager;
 
 
-    private MsgContentFragmentAdapter adapter;
+    private ShopAdapter adapter;
     private List<String> names;
 
     @Override
@@ -45,7 +46,8 @@ public class ContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new MsgContentFragmentAdapter(getChildFragmentManager());
+        adapter = new ShopAdapter(getChildFragmentManager());
+
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -55,8 +57,8 @@ public class ContactFragment extends Fragment {
 
     private void initData() {
         names = new ArrayList<>();
-        names.add("居中1");
-        names.add("居中2");
-        names.add("居中3");
+        names.add("运动器械");
+        names.add("购物车");
+        names.add("新人特惠");
     }
 }

@@ -15,11 +15,11 @@
         android:layout_marginTop="150dp">
 
         <EditText
-            android:id="@+id/et_phone"
+            android:id="@+id/et_mail"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:background="@drawable/capsule"
-            android:hint="输入手机号码"
+            android:hint="输入邮箱"
             android:paddingLeft="20dp"
             android:textSize="18sp"
             android:textColor="@color/black"
@@ -30,7 +30,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:text="获取验证码"
+            android:text="获取邮箱验证码"
             android:textSize="18sp"
             android:background="@drawable/btn_login_selector"
             />
@@ -45,23 +45,15 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
 
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_register"-->
-<!--            android:layout_marginTop="100dp"-->
-<!--            android:layout_marginLeft="130dp"-->
-<!--            android:background="@drawable/btn_register_shape"-->
-<!--            android:src="@mipmap/register"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
 
         <Button
-            android:id="@+id/iv_register"
-            android:layout_marginTop="100dp"
+            android:id="@+id/btn_register"
+            android:layout_width="37dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="130dp"
-            android:background="@drawable/btn_register_selector"
 
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_marginTop="100dp"
+            android:background="@drawable/btn_register_selector" />
 
         <TextView
             android:layout_marginTop="100dp"
@@ -83,10 +75,6 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-
-
-
 
 
 

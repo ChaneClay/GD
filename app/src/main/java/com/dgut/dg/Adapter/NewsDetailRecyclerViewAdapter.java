@@ -1,9 +1,11 @@
 package com.dgut.dg.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
+import com.dgut.dg.Activity.NewsDetailsActivity;
+import com.dgut.dg.Activity.VideoDetailsActivity;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.NewsBean;
 import com.dgut.dg.Utils.VideoBean;
@@ -57,10 +61,35 @@ public class NewsDetailRecyclerViewAdapter extends RecyclerView.Adapter<NewsDeta
             NewsBean.ResultDTO.DataDTO dataDTO = mDatas.get(position);
 
 
-            String url = dataDTO.getThumbnailPicS();
+            String thumbUrl = dataDTO.getThumbnailPicS();
+            String detailUrl = dataDTO.getUrl();
+            String date = dataDTO.getDate();
+
+
 
             holder.tv_news.setText(dataDTO.getTitle());
-            Glide.with(holder.iv_news.getContext()).load(url).into(holder.iv_news);
+            Glide.with(holder.iv_news.getContext()).load(thumbUrl).into(holder.iv_news);
+            holder.tv_time.setText(date);
+
+
+            holder.iv_news.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent =  new Intent(context, NewsDetailsActivity.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", detailUrl);
+                    intent.putExtras(bundle);
+
+                    Log.i(TAG, "onBindViewHolder: detailUrl " + detailUrl);
+
+
+
+
+                    context.startActivity(intent);
+
+                }
+            });
 
 
         }else {
@@ -78,11 +107,15 @@ public class NewsDetailRecyclerViewAdapter extends RecyclerView.Adapter<NewsDeta
 
         TextView tv_news;
         ImageView iv_news;
+        TextView tv_time;
+
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_news = itemView.findViewById(R.id.tv_news);
             iv_news = itemView.findViewById(R.id.iv_news);
+            tv_time = itemView.findViewById(R.id.tv_time);
 
 
         }

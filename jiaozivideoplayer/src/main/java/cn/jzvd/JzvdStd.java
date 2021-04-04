@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -190,6 +191,7 @@ public class JzvdStd extends Jzvd {
                         long duration = getDuration();
                         int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
                         bottomProgressBar.setProgress(progress);
+                        Log.i(TAG, "onTouch: 快进");
                     }
                     if (!mChangePosition && !mChangeVolume) {
                         onClickUiToggle();
@@ -446,6 +448,11 @@ public class JzvdStd extends Jzvd {
     @Override
     public void onProgress(int progress, long position, long duration) {
         super.onProgress(progress, position, duration);
+
+//        Log.i(TAG, "onProgress: hhhhhhhhhhhhh");
+//        Log.i(TAG, "onProgress: " + progress);
+//        bottomProgressBar.setProgress(20+progress);
+
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 
