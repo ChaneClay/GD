@@ -1,11 +1,21 @@
 package com.dgut.dg.Application;
 
+import android.util.Log;
+
 public class MyApplication {
 
     private static String url;
     private static String emailUser;
     private static String emailPassword;
     private static String emailUserName;
+
+    static {
+        url = "http://v.juhe.cn/toutiao/index?type=&page=&page_size=&key=45a4c8a211a9f35ca031e22a93c1fc77";
+        emailUser = "ak51507@163.com";
+        emailUserName = "ak51507";
+        emailPassword = "JIUUSSCFPKWYKTWG";
+
+    }
 
     public static String getEmailUserName() {
         return emailUserName;
@@ -43,13 +53,7 @@ public class MyApplication {
 
 
 
-    public MyApplication(){
-        this.url = "http://v.juhe.cn/toutiao/index?type=&page=&page_size=&key=45a4c8a211a9f35ca031e22a93c1fc77";
-        this.emailUser = "ak51507@163.com";
-        this.emailPassword = "JIUUSSCFPKWYKTWG";
-        this.emailUserName = "ak51507";
 
-    }
 
 
 

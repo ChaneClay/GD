@@ -47,10 +47,7 @@ public class VideoDetailsActivity extends AppCompatActivity {
         });
 
 
-
-
-//        JzvdStd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;  //横向
-//        JzvdStd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT;  //纵向
+//        playUrl = "https://static1.keepcdn.com/online/exercise/video/5afbabb3a29e345385f5e04a/1526443484376/B001C024.mp4";
 
 
         JzvdStd jzvdStd = findViewById(R.id.jz_video);

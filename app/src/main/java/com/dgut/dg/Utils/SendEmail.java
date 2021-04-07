@@ -1,5 +1,7 @@
 package com.dgut.dg.Utils;
 
+import android.util.Log;
+
 import com.dgut.dg.Application.MyApplication;
 
 import java.util.Date;
@@ -32,7 +34,9 @@ public class SendEmail {
     private String IS_ENABLED_DEBUG_MOD = "true";
     // 发件人
 
-    private String from = MyApplication.getEmailUser();
+
+    private String from = MyApplication.getEmailUser();    //你新注册的邮箱
+
     // 收件人
     private String to = "";              //收件人，为EditText填入的邮箱地址
     // 初始化连接邮件服务器的会话信息
@@ -53,34 +57,36 @@ public class SendEmail {
      * @param Num
      * @throws Exception
      */
-    public void sendTextEmail(long Num) throws Exception {
-        // 创建Session实例对象
-        Session session = Session.getDefaultInstance(props);
-
-        // 创建MimeMessage实例对象
-        MimeMessage message = new MimeMessage(session);
-        // 设置发件人
-        message.setFrom(new InternetAddress(from));
-        // 设置邮件主题
-        message.setSubject("表弃");
-        // 设置收件人
-        message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-        // 设置发送时间
-        message.setSentDate(new Date());
-        // 设置纯文本内容为邮件正文
-        message.setText("使用撒范德萨发给!");
-        // 保存并生成最终的邮件内容
-        message.saveChanges();
-
-        // 获得Transport实例对象
-        Transport transport = session.getTransport();
-        // 打开连接
-        transport.connect(MyApplication.getEmailUser(), MyApplication.getEmailPassword());         //邮箱名字和刚才设置的授权密码
-        // 将message对象传递给transport对象，将邮件发送出去
-        transport.sendMessage(message, message.getAllRecipients());
-        // 关闭连接
-        transport.close();
-    }
+//    public void sendTextEmail(long Num) throws Exception {
+//        // 创建Session实例对象
+//        Session session = Session.getDefaultInstance(props);
+//
+//        // 创建MimeMessage实例对象
+//        MimeMessage message = new MimeMessage(session);
+//        // 设置发件人
+//        message.setFrom(new InternetAddress(from));
+//        // 设置邮件主题
+//        message.setSubject("表弃");
+//        // 设置收件人
+//        message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//        // 设置发送时间
+//        message.setSentDate(new Date());
+//        // 设置纯文本内容为邮件正文
+//        message.setText("使用撒范德萨发给!");
+//        // 保存并生成最终的邮件内容
+//        message.saveChanges();
+//
+//        // 获得Transport实例对象
+//        Transport transport = session.getTransport();
+//        // 打开连接
+//        transport.connect(MyApplication.getEmailUser(), MyApplication.getEmailPassword());         //邮箱名字和刚才设置的授权密码
+//
+//
+//        // 将message对象传递给transport对象，将邮件发送出去
+//        transport.sendMessage(message, message.getAllRecipients());
+//        // 关闭连接
+//        transport.close();
+//    }
 
     /**
      * 发送简单的html验证码邮件，Num为验证码
