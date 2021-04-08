@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DG</string>
+    <string name="app_name" translatable="false">DG</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -7,5 +7,11 @@
     <string name="menu_contact">商城</string>
     <string name="menu_find">社区</string>
     <string name="menu_me">个人资料</string>
+
+
+    <string name="shoppingcat" translatable="false">购物车</string>
+    <string name="actionBar_edit" translatable="false">编辑</string>
+    <string name="all" translatable="false">全选</string>
+    <string name="order_total" translatable="false">合计 :</string>
 
 </resources>

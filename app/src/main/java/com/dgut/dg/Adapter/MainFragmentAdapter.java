@@ -1,5 +1,7 @@
 package com.dgut.dg.Adapter;
 
+import androidx.appcompat.app.ActionBar;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,7 +12,11 @@ import com.dgut.dg.Fragment.FindFragment;
 import com.dgut.dg.Fragment.MeFragment;
 import com.dgut.dg.Fragment.MsgFragment;
 
+
+
 public class MainFragmentAdapter extends FragmentPagerAdapter {
+
+
     public MainFragmentAdapter(@NonNull FragmentManager fm) {
         super(fm);
     }

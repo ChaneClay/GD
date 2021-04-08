@@ -67,8 +67,6 @@ public class ShopFragment extends Fragment {
 
         }
 
-
-
         CommonRes.setImages(args);
 
     }

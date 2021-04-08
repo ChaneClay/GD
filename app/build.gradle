@@ -59,6 +59,9 @@ dependencies {
     implementation 'com.sun.mail:android-mail:1.5.5'
     implementation 'com.sun.mail:android-activation:1.5.5'
 
+    //强大的下拉刷新控件
+    implementation 'in.srain.cube:ultra-ptr:1.0.11'
+
 
 
 

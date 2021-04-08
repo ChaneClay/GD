@@ -1,5 +1,6 @@
 package com.dgut.dg.Adapter;
 
+import androidx.appcompat.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.dgut.dg.Fragment.MsgContentFragment;
 import com.dgut.dg.Fragment.NewsFragment;
 import com.dgut.dg.Fragment.ShopFragment;
+import com.dgut.dg.Fragment.ShoppingCartFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 public class ShopAdapter extends FragmentPagerAdapter {
 
     private List<String> names;
+
 
     String TAG = "ShopAdapter";
 
@@ -46,8 +49,8 @@ public class ShopAdapter extends FragmentPagerAdapter {
                 Log.i(TAG, "getItem: 111");
                 break;
             case 1:
-                fragment = new MsgContentFragment();
-                Log.i(TAG, "getItem: 222");
+                fragment = new ShoppingCartFragment();
+                Log.i(TAG, "getItem: 购物车");
 
                 break;
 

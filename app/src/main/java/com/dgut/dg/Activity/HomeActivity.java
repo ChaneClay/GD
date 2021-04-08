@@ -1,8 +1,10 @@
 package com.dgut.dg.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 
 import android.app.Person;
 import android.content.ContentValues;
@@ -58,6 +60,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        getSupportActionBar().hide();
 
 
         ButterKnife.bind(this);
@@ -170,6 +174,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // ViewPager是一个容器，该组件所显示的内容由它的Adapter提供，因此使用ViewPager必须为它设置一个Adapter
         // ViewPager需要设置一个Adapter，该Adapter需要返回不同的fragment（比如页面切换）
+
 
         adapter = new MainFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);

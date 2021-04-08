@@ -1,5 +1,7 @@
 package com.dgut.dg.Fragment;
 
+//import android.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -46,6 +48,7 @@ public class ContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         ButterKnife.bind(this, view);
 
+        // 这里的actionBar有没有问题
         adapter = new ShopAdapter(getChildFragmentManager());
 
         viewPager.setAdapter(adapter);
