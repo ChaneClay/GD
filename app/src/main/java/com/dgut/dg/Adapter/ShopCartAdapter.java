@@ -37,11 +37,12 @@ import butterknife.ButterKnife;
  * 购物车适配器
  */
 
-public class ShopcatAdapter extends BaseExpandableListAdapter {
+public class ShopCartAdapter extends BaseExpandableListAdapter {
     private List<StoreInfo> groups;
+
     //这个String对应着StoreInfo的Id，也就是店铺的Id
     private Map<String, List<GoodsInfo>> childrens;
-    private Context mcontext;
+    private Context mContext;
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private GroupEditorListener groupEditorListener;
@@ -49,10 +50,10 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
     private boolean flag=true; //组的编辑按钮是否可见，true可见，false不可见
 
 
-    public ShopcatAdapter(List<StoreInfo> groups, Map<String, List<GoodsInfo>> childrens, Context mcontext) {
+    public ShopCartAdapter(List<StoreInfo> groups, Map<String, List<GoodsInfo>> childrens, Context mContext) {
         this.groups = groups;
         this.childrens = childrens;
-        this.mcontext = mcontext;
+        this.mContext = mContext;
     }
 
     @Override
@@ -92,11 +93,12 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         final GroupViewHolder groupViewHolder;
         if (convertView == null) {
-            convertView = View.inflate(mcontext, R.layout.item_shopcat_group, null);
+            convertView = View.inflate(mContext, R.layout.item_shopcat_group, null);
             groupViewHolder = new GroupViewHolder(convertView);
             convertView.setTag(groupViewHolder);
         } else {
@@ -114,7 +116,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
                 checkInterface.checkGroup(groupPosition, ((CheckBox) v).isChecked());
             }
         });
-        groupViewHolder.storeCheckBox.setChecked(group.isChoosed());
+        groupViewHolder.storeCheckBox.setChecked(group.isSelected());
 
         /**【文字指的是组的按钮的文字】
          * 当我们按下ActionBar的 "编辑"按钮， 应该把所有组的文字显示"编辑",并且设置按钮为不可见
@@ -148,7 +150,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ChildViewHolder childViewHolder;
         if (convertView == null) {
-            convertView = View.inflate(mcontext, R.layout.item_shopcat_product, null);
+            convertView = View.inflate(mContext, R.layout.item_shopcat_product, null);
             childViewHolder = new ChildViewHolder(convertView);
             convertView.setTag(childViewHolder);
         } else {
@@ -191,7 +193,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
             childViewHolder.goodsPrice.setText("￥" + child.getPrice() + "");
             childViewHolder.goodsNum.setText(String.valueOf(child.getCount()));
             childViewHolder.goodsImage.setImageResource(R.drawable.cmaz);
-            childViewHolder.goods_size.setText("门票:" + child.getColor() + ",类型:" + child.getSize());
+            childViewHolder.goods_size.setText("颜色:" + child.getColor() + "  尺寸:" + child.getSize());
             //设置打折前的原价
             SpannableString spannableString = new SpannableString("￥" + child.getPrime_price() + "");
             StrikethroughSpan span = new StrikethroughSpan();
@@ -205,11 +207,11 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
 
             childViewHolder.goodsBuyNum.setText("x" + child.getCount() + "");
 
-            childViewHolder.singleCheckBox.setChecked(child.isChoosed());
+            childViewHolder.singleCheckBox.setChecked(child.isSelected());
             childViewHolder.singleCheckBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    child.setChoosed(((CheckBox) v).isChecked());
+                    child.setSelected(((CheckBox) v).isChecked());
                     childViewHolder.singleCheckBox.setChecked(((CheckBox) v).isChecked());
                     checkInterface.checkChild(groupPosition, childPosition, ((CheckBox) v).isChecked());
                 }
@@ -236,7 +238,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
             childViewHolder.delGoods.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AlertDialog.Builder(mcontext)
+                    new AlertDialog.Builder(mContext)
                             .setMessage("确定要删除该商品吗")
                             .setNegativeButton("取消",null)
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -262,8 +264,8 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
      * @param child
      */
     private void showDialog(final int groupPosition, final int childPosition, final View showCountView,final  boolean isChecked, final  GoodsInfo child) {
-        final AlertDialog.Builder alertDialog_Builder=new AlertDialog.Builder(mcontext);
-        View view= LayoutInflater.from(mcontext).inflate(R.layout.dialog_change_num,null);
+        final AlertDialog.Builder alertDialog_Builder=new AlertDialog.Builder(mContext);
+        View view= LayoutInflater.from(mContext).inflate(R.layout.dialog_change_num,null);
         final AlertDialog  dialog=alertDialog_Builder.create();
         dialog.setView(view);//errored,这里是dialog，不是alertDialog_Buidler
         count=child.getCount();
@@ -273,7 +275,7 @@ public class ShopcatAdapter extends BaseExpandableListAdapter {
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
-                UtilTool.showKeyboard(mcontext,showCountView);
+                UtilTool.showKeyboard(mContext,showCountView);
             }
         });
         final TextView increase= (TextView) view.findViewById(R.id.dialog_increaseNum);

@@ -6,10 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_shop"
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_shop"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"/>
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:background="@color/gray_text">
+
+        <TextView
+            android:id="@+id/goods_decs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="春秋长袖衬衣男士潮牌"/>
+
+        <TextView
+            android:id="@+id/goods_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="￥ 200"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>

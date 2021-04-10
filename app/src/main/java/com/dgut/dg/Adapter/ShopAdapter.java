@@ -37,6 +37,7 @@ public class ShopAdapter extends FragmentPagerAdapter {
     }
 
 
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -46,12 +47,9 @@ public class ShopAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 fragment = new ShopFragment();
-                Log.i(TAG, "getItem: 111");
                 break;
             case 1:
                 fragment = new ShoppingCartFragment();
-                Log.i(TAG, "getItem: 购物车");
-
                 break;
 
             default:

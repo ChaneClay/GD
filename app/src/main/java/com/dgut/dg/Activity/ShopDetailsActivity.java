@@ -1,17 +1,19 @@
 package com.dgut.dg.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dgut.dg.R;
-import com.dgut.dg.Utils.CommonRes;
+import com.dgut.dg.entity.CommonInfo;
 
 public class ShopDetailsActivity extends AppCompatActivity {
 
@@ -26,13 +28,18 @@ public class ShopDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_details);
 
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("返回");
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(false);
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        int id = Integer.parseInt(bundle.getString("id")) % CommonRes.getImages().length;
+        int id = Integer.parseInt(bundle.getString("id")) % CommonInfo.getImages().length;
 
 
         mIvShop = findViewById(R.id.iv_shop);
-        mIvShop.setImageResource(CommonRes.getImages()[id][0]);
+        mIvShop.setImageResource(CommonInfo.getImages()[id][0]);
 
 
         mBtBuy = findViewById(R.id.bt_buy);
@@ -52,10 +59,19 @@ public class ShopDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    // 页面返回键
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
 
-
-
-
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

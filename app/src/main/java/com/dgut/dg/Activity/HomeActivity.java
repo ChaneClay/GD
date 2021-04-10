@@ -1,12 +1,10 @@
 package com.dgut.dg.Activity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 
-import android.app.Person;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,10 +19,12 @@ import android.widget.TextView;
 import com.dgut.dg.Adapter.MainFragmentAdapter;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.DatabaseHelper;
-import com.dgut.dg.Utils.PersonalMes;
+import com.dgut.dg.entity.PersonalInfo;
 import com.dgut.dg.Utils.RandomData;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,36 +52,89 @@ public class HomeActivity extends AppCompatActivity {
     private long exitTime;
 
     private SQLiteDatabase db;
-
-
+    
 
     // 当第一次创建数据库时回调该方法
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        
 
         getSupportActionBar().hide();
-
 
         ButterKnife.bind(this);
 
         // 数据库操作
-        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this, "user_db", null, 1);
+        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this, "userdb", null, 1);
         db = dbHelper.getWritableDatabase();
 
+        // 插入个人信息
         insertData();
+
+        // 插入货物信息
+        insertGoodsInfo();
 
         initPager();
         setTabs(tabLayout, getLayoutInflater(), TAB_TITLES, TAB_IMGS);
 
     }
 
+    // 插入货物信息
+    public void insertGoodsInfo(){
+
+        String query = "select * from goods";
+        Cursor cursor = db.rawQuery(query, null);
+
+        String result = "";
+        boolean flag = false;
+
+        while (cursor.moveToNext()){
+            result =  cursor.getString(cursor.getColumnIndex("id"));
+            if (result.equals("0")){
+                Log.i(TAG, "insertGoodsInfo: %% "+ cursor.getString(cursor.getColumnIndex("imageUrl")));
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag){
+
+            int[] img = {R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz};
+
+            //数据的数量
+            int N=5;
+
+            for(int i =0; i<N; i++){
+                ContentValues contentValues = new ContentValues();
+
+                contentValues.put("id", i);
+                contentValues.put("name", "GoodsName");
+                contentValues.put("isSelected", 0);
+                contentValues.put("imageUrl", "https://python.com");
+                contentValues.put("descGoods", "beautiful");
+                contentValues.put("price", 255.0 + new Random().nextInt(3000));
+                contentValues.put("prime_price", 1555.0 + new Random().nextInt(3000));
+                contentValues.put("position", new Random().nextInt(20));
+                contentValues.put("count", new Random().nextInt(50));
+                contentValues.put("color", "red");
+                contentValues.put("size", "10");
+                contentValues.put("goodsImg", img[i%img.length]);
+
+                long rowId = db.insert("goods", null, contentValues);
+                if (rowId != -1){
+                    Log.i(TAG, "insertGoodsInfo: 成功插入"+ (i+1) +"条数据！");
+                }
+            }
+
+
+        }
+    }
 
     public void insertData(){
 
         // 登陆的邮箱
-        String email = PersonalMes.getEmail();
+        String email = PersonalInfo.getEmail();
 
         String query = new StringBuilder().append("select * from user where email = '")
                 .append(email).append("'").toString();
@@ -94,11 +147,11 @@ public class HomeActivity extends AppCompatActivity {
             result =  cursor.getString(cursor.getColumnIndex("email"));
             if (result.equals(email)){
                 // 旧用户
-                PersonalMes.setName(cursor.getString(cursor.getColumnIndex("name")));
-                PersonalMes.setGender(cursor.getString(cursor.getColumnIndex("gender")));
-                PersonalMes.setAge(cursor.getInt(cursor.getColumnIndex("age")));
-                PersonalMes.setHeight(cursor.getDouble(cursor.getColumnIndex("height")));
-                PersonalMes.setWeight(cursor.getDouble(cursor.getColumnIndex("weight")));
+                PersonalInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
+                PersonalInfo.setGender(cursor.getString(cursor.getColumnIndex("gender")));
+                PersonalInfo.setAge(cursor.getInt(cursor.getColumnIndex("age")));
+                PersonalInfo.setHeight(cursor.getDouble(cursor.getColumnIndex("height")));
+                PersonalInfo.setWeight(cursor.getDouble(cursor.getColumnIndex("weight")));
 
                 flag = true;
                 break;
@@ -114,33 +167,31 @@ public class HomeActivity extends AppCompatActivity {
 
                     // 默认邮箱
                     if (email == "" || email == null){
-                        PersonalMes.setEmail("893461@qq.com");
+                        PersonalInfo.setEmail("893461@qq.com");
                     }
 
                     // 用户名
-                    PersonalMes.setName(new RandomData().getRandomString());
+                    PersonalInfo.setName(new RandomData().getRandomString());
 
                     // 性别
-                    PersonalMes.setGender("male");
+                    PersonalInfo.setGender("male");
 
                     // 年龄
-                    PersonalMes.setAge(18);
+                    PersonalInfo.setAge(18);
 
                     // 身高
-                    PersonalMes.setHeight(175.0);
+                    PersonalInfo.setHeight(175.0);
                     // 体重
-                    PersonalMes.setWeight(65);
-
+                    PersonalInfo.setWeight(65);
 
                     contentValues.put("email", email);
-                    contentValues.put("name", PersonalMes.getName());
-                    contentValues.put("gender", PersonalMes.getGender());
-                    contentValues.put("age", PersonalMes.getAge());
-                    contentValues.put("height", PersonalMes.getHeight());
-                    contentValues.put("weight", PersonalMes.getWeight());
+                    contentValues.put("name", PersonalInfo.getName());
+                    contentValues.put("gender", PersonalInfo.getGender());
+                    contentValues.put("age", PersonalInfo.getAge());
+                    contentValues.put("height", PersonalInfo.getHeight());
+                    contentValues.put("weight", PersonalInfo.getWeight());
 
                     db.insert("user", null, contentValues);
-
 
                 }
             }).run();

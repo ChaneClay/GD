@@ -1,10 +1,13 @@
 package com.dgut.dg.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +24,11 @@ public class NewsDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("返回");
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(false);
 
 
         Intent intent = getIntent();
@@ -42,10 +50,19 @@ public class NewsDetailsActivity extends AppCompatActivity {
         });
 
 
+    }
 
+    // 页面返回键
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
 
-
-
-
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

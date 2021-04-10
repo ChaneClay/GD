@@ -64,4 +64,5 @@ public class ContactFragment extends Fragment {
         names.add("购物车");
         names.add("新人特惠");
     }
+
 }

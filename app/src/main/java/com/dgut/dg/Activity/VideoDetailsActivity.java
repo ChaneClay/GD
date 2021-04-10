@@ -1,5 +1,7 @@
 package com.dgut.dg.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -25,9 +28,18 @@ public class VideoDetailsActivity extends AppCompatActivity {
 
     private Button mBtnSub;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("返回");
+        bar.setDisplayHomeAsUpEnabled(true);
+        bar.setDisplayShowHomeEnabled(false);
+
+
 
         setContentView(R.layout.activity_video_details);
 
@@ -46,7 +58,6 @@ public class VideoDetailsActivity extends AppCompatActivity {
             }
         });
 
-
 //        playUrl = "https://static1.keepcdn.com/online/exercise/video/5afbabb3a29e345385f5e04a/1526443484376/B001C024.mp4";
 
 
@@ -57,8 +68,21 @@ public class VideoDetailsActivity extends AppCompatActivity {
 
         jzvdStd.startVideo();       //自动播放
 
+    }
 
 
+    // 页面返回键
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

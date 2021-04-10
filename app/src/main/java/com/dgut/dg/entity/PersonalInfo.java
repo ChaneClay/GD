@@ -1,9 +1,9 @@
-package com.dgut.dg.Utils;
+package com.dgut.dg.entity;
 
 
 
 
-public class PersonalMes{
+public class PersonalInfo {
 
     private static String email;
     private static String name;
@@ -17,7 +17,7 @@ public class PersonalMes{
     }
 
     public static void setEmail(String email) {
-        PersonalMes.email = email;
+        PersonalInfo.email = email;
     }
 
     public static String getName() {
@@ -25,7 +25,7 @@ public class PersonalMes{
     }
 
     public static void setName(String name) {
-        PersonalMes.name = name;
+        PersonalInfo.name = name;
     }
 
     public static String getGender() {
@@ -33,7 +33,7 @@ public class PersonalMes{
     }
 
     public static void setGender(String gender) {
-        PersonalMes.gender = gender;
+        PersonalInfo.gender = gender;
     }
 
     public static int getAge() {
@@ -41,7 +41,7 @@ public class PersonalMes{
     }
 
     public static void setAge(int age) {
-        PersonalMes.age = age;
+        PersonalInfo.age = age;
     }
 
     public static double getHeight() {
@@ -49,7 +49,7 @@ public class PersonalMes{
     }
 
     public static void setHeight(double height) {
-        PersonalMes.height = height;
+        PersonalInfo.height = height;
     }
 
     public static double getWeight() {
@@ -57,14 +57,7 @@ public class PersonalMes{
     }
 
     public static void setWeight(double weight) {
-        PersonalMes.weight = weight;
+        PersonalInfo.weight = weight;
     }
-
-
-
-
-
-
-
 
 }

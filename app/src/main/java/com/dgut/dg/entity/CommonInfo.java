@@ -1,21 +1,16 @@
-package com.dgut.dg.Utils;
+package com.dgut.dg.entity;
 
-public class CommonRes {
+public class CommonInfo {
 
     public static int[][] getImages() {
         return images;
     }
 
     public static void setImages(int[][] images) {
-        CommonRes.images = images;
+        CommonInfo.images = images;
     }
 
     private static int images[][];
-
-
-
-
-
 
 
 

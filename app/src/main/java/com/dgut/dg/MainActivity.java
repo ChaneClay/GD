@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.dgut.dg.Activity.CodeVerifyActivity;
 import com.dgut.dg.Activity.HomeActivity;
-import com.dgut.dg.Utils.PersonalMes;
+import com.dgut.dg.entity.PersonalInfo;
 import com.dgut.dg.Utils.RandomData;
 import com.dgut.dg.Utils.SendEmail;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+
+        //开启service
+        SQLiteStudioService.instance().start(this);
 
         mEtMail = findViewById(R.id.et_mail);
         mBtnLogin = findViewById(R.id.btn_login);
@@ -88,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
 
                 bundle.putString("code", String.valueOf(verificationCode));
-                PersonalMes.setEmail(email);
+                PersonalInfo.setEmail(email);
                 intent.putExtras(bundle);
 
                 startActivity(intent);
