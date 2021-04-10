@@ -1,5 +1,6 @@
 package com.dgut.dg.entity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,8 @@ import android.util.Log;
 
 import com.dgut.dg.Activity.HomeActivity;
 import com.dgut.dg.Utils.DatabaseHelper;
+
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/3/26.
@@ -27,35 +30,29 @@ public class GoodsInfo {
     private String size;
     private int goodsImg;
 
+
+
+    public String getTAG() {
+        return TAG;
+    }
+
+    public void setTAG(String TAG) {
+        this.TAG = TAG;
+    }
+
+    private int isSub;
+
     String TAG = "TAG";
 
 
-
-    public GoodsInfo(){
-
-    }
-
-    public GoodsInfo(String id, String name, String desc,double price, double prime_price,
-                     String color, String size, int goodsImg,int count) {
-        this.id = id;
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.prime_price = prime_price;
-        this.count = count;
-        this.color = color;
-        this.size = size;
-        this.goodsImg = goodsImg;
-    }
 
     public GoodsInfo[] getGoodsInfo(Context context) {
 
         DatabaseHelper dbHelper = new DatabaseHelper(context, "userdb", null, 1);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        int N=5;
+        int N=8;
         GoodsInfo goodsInfo[] = new GoodsInfo[N];
-//        Log.i(TAG, "getGoodsInfo: GoodsInfo length: " + goodsInfo.length);
         for (int i = 0; i < goodsInfo.length; i++) {
             goodsInfo[i] = new GoodsInfo();
         }
@@ -66,8 +63,6 @@ public class GoodsInfo {
 
         int i=0;
        while(cursor.moveToNext()){
-
-            Log.i("TAG", "getGoodsInfo: ###" + cursor.getString(cursor.getColumnIndex("price")));
 
             goodsInfo[i].id = cursor.getString(cursor.getColumnIndex("id"));
             goodsInfo[i].name = cursor.getString(cursor.getColumnIndex("name"));
@@ -81,37 +76,31 @@ public class GoodsInfo {
             goodsInfo[i].color = cursor.getString(cursor.getColumnIndex("color"));
             goodsInfo[i].size = cursor.getString(cursor.getColumnIndex("size"));
             goodsInfo[i].goodsImg = cursor.getInt(cursor.getColumnIndex("goodsImg"));
+            goodsInfo[i].isSub = cursor.getInt(cursor.getColumnIndex("isSub"));
             i++;
         }
 
-
-//        for (int j = 0; j < goodsInfo.length; j++) {
-//            Log.i("TAG", "getGoodsInfo: --- " + goodsInfo[j].getPrice());
-//        }
+        return goodsInfo;
+    }
 
 
-//        while (cursor.moveToNext()){
-//            goodsInfo.id = cursor.getString(cursor.getColumnIndex("id"));
-//            goodsInfo.name = cursor.getString(cursor.getColumnIndex("name"));
-//            goodsInfo.isSelected = cursor.getColumnIndex("isSelected") == 0 ? false:true;
-//            goodsInfo.imageUrl = cursor.getString(cursor.getColumnIndex("imageUrl"));
-//            goodsInfo.desc = cursor.getString(cursor.getColumnIndex("descGoods"));
-//
-//            goodsInfo.price = cursor.getDouble(cursor.getColumnIndex("price"));
-////            Log.i(TAG, "getGoodsInfo: **** " + goodsInfo.price);
-//
-//            goodsInfo.prime_price = cursor.getDouble(cursor.getColumnIndex("prime_price"));
-//
-////            Log.i(TAG, "getGoodsInfo: **** " + goodsInfo.prime_price);
-//
-//
-//            goodsInfo.position = cursor.getInt(cursor.getColumnIndex("position"));
-//            goodsInfo.count = cursor.getColumnIndex("count");
-//            goodsInfo.color = cursor.getString(cursor.getColumnIndex("color"));
-//            goodsInfo.size = cursor.getString(cursor.getColumnIndex("size"));
-//            goodsInfo.goodsImg = cursor.getColumnIndex("goodsImg");
-//        }
+    public GoodsInfo setGoodsInfo(Context context, ContentValues values, String id){
 
+        DatabaseHelper dbHelper = new DatabaseHelper(context, "userdb", null, 1);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.update("goods", values, "id=?", new String[]{id});
+        Log.i(TAG, "setGoodsInfo: 成功修改数据！！！");
+
+
+        GoodsInfo goodsInfos[] = getGoodsInfo(context);
+        GoodsInfo goodsInfo = null;
+        for (int i = 0; i < goodsInfos.length; i++) {
+            goodsInfo = goodsInfos[i];
+            if (goodsInfo.getId().equals(id)){
+                return goodsInfos[i];
+            }
+        }
         return goodsInfo;
     }
 
@@ -213,6 +202,14 @@ public class GoodsInfo {
 
     public void setGoodsImg(int goodsImg) {
         this.goodsImg = goodsImg;
+    }
+
+    public int getIsSub() {
+        return isSub;
+    }
+
+    public void setIsSub(int isSub) {
+        this.isSub = isSub;
     }
 
 

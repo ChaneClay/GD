@@ -45,11 +45,15 @@ public class NewsFragment extends Fragment {
 
                 if(newsBean != null){
                     NewsBean.ResultDTO result = newsBean.getResult();
-                    List<NewsBean.ResultDTO.DataDTO> data = result.getData();
-
-                    for (int i=0; i<data.size(); i++){
-                        mDatas.add(data.get(i));
+                    if (result != null){
+                        List<NewsBean.ResultDTO.DataDTO> data = result.getData();
+                        for (int i=0; i<data.size(); i++){
+                            mDatas.add(data.get(i));
+                        }
                     }
+
+
+
                 }
 
                 adapter.notifyDataSetChanged();
@@ -70,7 +74,6 @@ public class NewsFragment extends Fragment {
 
         mDatas = new ArrayList<>();
         loadData(url);
-
     }
 
     @Override

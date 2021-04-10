@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dgut.dg.R;
-import com.dgut.dg.entity.CommonInfo;
+import com.dgut.dg.Utils.DatabaseHelper;
+import com.dgut.dg.entity.GoodsInfo;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShopDetailsActivity extends AppCompatActivity {
 
@@ -23,27 +29,38 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private Button mBtSub;
 
 
+    GoodsInfo goodsInfos[];
+    GoodsInfo goodsInfo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_details);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        goodsInfos = new GoodsInfo().getGoodsInfo(getApplicationContext());
+        mIvShop = findViewById(R.id.iv_shop);
+        int id = Integer.parseInt(bundle.getString("id"));
+        goodsInfo = goodsInfos[id];
+        mIvShop.setImageResource(goodsInfo.getGoodsImg());
+
+        mBtBuy = findViewById(R.id.bt_buy);
+        mBtSub = findViewById(R.id.bt_subscribe);
 
         ActionBar bar = getSupportActionBar();
         bar.setTitle("返回");
         bar.setDisplayHomeAsUpEnabled(true);
         bar.setDisplayShowHomeEnabled(false);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        int id = Integer.parseInt(bundle.getString("id")) % CommonInfo.getImages().length;
 
+        if (goodsInfo.getIsSub() == 1){
+            mBtSub.setText("已订阅");
+        }else {
+            mBtSub.setText("订阅");
+        }
 
-        mIvShop = findViewById(R.id.iv_shop);
-        mIvShop.setImageResource(CommonInfo.getImages()[id][0]);
-
-
-        mBtBuy = findViewById(R.id.bt_buy);
-        mBtSub = findViewById(R.id.bt_subscribe);
 
         mBtBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +69,25 @@ public class ShopDetailsActivity extends AppCompatActivity {
             }
         });
 
+        // 收藏
         mBtSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ShopDetailsActivity.this, "进入订阅页面", Toast.LENGTH_LONG).show();
+
+                ContentValues values = new ContentValues();
+                if (goodsInfo.getIsSub() == 1){
+                    mBtSub.setText("订阅");
+                    values.put("isSub", "0");
+                }else {
+                    mBtSub.setText("已订阅");
+                    values.put("isSub", "1");
+                }
+
+                // 直接返回更新后的对象
+                goodsInfo = goodsInfo.setGoodsInfo(getApplicationContext(), values, String.valueOf(id));
+
             }
         });
-
     }
 
     // 页面返回键

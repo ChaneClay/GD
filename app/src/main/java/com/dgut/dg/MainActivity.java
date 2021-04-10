@@ -136,15 +136,8 @@ public class MainActivity extends AppCompatActivity {
                     super.run();
                     try {
 
-//                        RandomNumber rn = new RandomNumber();
-//                        verificationCode = rn.getRandomNumber(6);
                         SendEmail se = new SendEmail(email);
                         se.sendHtmlEmail(verificationCode);//发送html邮件
-
-
-//                        Looper.prepare();
-//                        Toast.makeText(MainActivity.this,"发送成功", Toast.LENGTH_LONG).show();
-//                        Looper.loop();// 进入loop中的循环，查看消息队列
 
 
                     } catch (Exception e) {
@@ -155,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 

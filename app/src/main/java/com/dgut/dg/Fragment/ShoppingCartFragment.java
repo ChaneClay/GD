@@ -1,5 +1,6 @@
 package com.dgut.dg.Fragment;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -72,7 +73,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
     private View mMainView;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,6 +117,18 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                     @Override
                     public void run() {
                         mPtrFrame.refreshComplete();
+
+                        Log.i(TAG, "run: 正在刷新！！！");
+
+                        initData();
+                        initEvents();
+
+//                        StoreInfo group = groups.get(0);
+//                        List<GoodsInfo> child = childs.get(group.getId());
+
+
+                        adapter.notifyDataSetChanged();
+
                     }
                 },2000);
             }
@@ -169,39 +181,10 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
     }
 
 
-
-//    private void initData() {
-////        mContext = getActivity();
-//        // 代表一个店铺
-//        groups = new ArrayList<StoreInfo>();
-//        childs = new HashMap<String, List<GoodsInfo>>();
-//        for (int i = 0; i < 1; i++) {
-//            groups.add(new StoreInfo(i + "", "小马的第" + (i + 1) + "号当铺"));
-//
-//            // 代表一个商品
-//            List<GoodsInfo> goods = new ArrayList<>();
-//
-//            for (int j = 0; j <= i+5; j++) {
-//                int[] img = {R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz};
-//                //i-j 就是商品的id， 对应着第几个店铺的第几个商品，1-1 就是第一个店铺的第一个商品
-//                goods.add(new GoodsInfo(i + "-" + j, "商品", groups.get(i).getName() + "的第" + (j + 1) + "个商品", 255.00 + new Random().nextInt(1500), 1555 + new Random().nextInt(3000), "红色", "L", img[j], new Random().nextInt(100)));
-//            }
-//            //一个键值对应一个商家，一个商家对应多个货物
-//            childs.put(groups.get(i).getId(), goods);
-//        }
-//
-//
-//    }
-
-
-
     private void initData() {
 
         GoodsInfo goodsInfo[] = new GoodsInfo().getGoodsInfo(mContext);
 
-
-
-        // adapter = new ShopCartAdapter(groups, childs, mContext);
         // 代表一个店铺
         groups = new ArrayList<StoreInfo>();
         childs = new HashMap<String, List<GoodsInfo>>();
@@ -213,20 +196,17 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
 
         for (int i = 0; i < goodsInfo.length; i++) {
-
-            goods.add(goodsInfo[i]);
+            if (goodsInfo[i].getIsSub() == 1){
+                goods.add(goodsInfo[i]);
+            }
         }
 
 
-//        for (int j = 0; j <= 5; j++) {
-//
-//            int[] img = {R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz};
-//            goods.add(new GoodsInfo(String.valueOf(j), "商品", groups.get(0).getName() + "的第" + (j + 1) + "个商品", 255.00 + new Random().nextInt(1500), 1555 + new Random().nextInt(3000), "红色", "L", img[j], new Random().nextInt(100)));
-//
-//        }
-
         //一个键值对应一个商家，一个商家对应多个货物
         childs.put(groups.get(0).getId(), goods);
+
+        Log.i(TAG, "initData: 初始化数据initData");
+
 
     }
 
@@ -317,6 +297,9 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         GoodsInfo good = (GoodsInfo) adapter.getChild(groupPosition, childPosition);
         int count = good.getCount();
         count++;
+
+        updateCount(good, count, good.getId());
+
         good.setCount(count);
         ((TextView) showCountView).setText(String.valueOf(count));
         adapter.notifyDataSetChanged();
@@ -331,12 +314,26 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
             return;
         }
         count--;
+
+        updateCount(good, count, good.getId());
         good.setCount(count);
         ((TextView) showCountView).setText("" + count);
         adapter.notifyDataSetChanged();
         calculate();
     }
 
+    public void updateCount(GoodsInfo goodsInfo, int count, String id){
+
+        ContentValues values = new ContentValues();
+        values.put("count", count);
+        goodsInfo.setGoodsInfo(mContext, values, id);
+
+        // 表面更新、实际更新
+        // 更新数据
+        initData();
+        initEvents();
+
+    }
 
 
     @Override
@@ -344,19 +341,41 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         GoodsInfo good = (GoodsInfo) adapter.getChild(groupPosition, childPosition);
         int count = good.getCount();
         UtilsLog.i("进行更新数据，数量" + count + "");
+
+        updateCount(good, count, good.getId());
+
         ((TextView) showCountView).setText(String.valueOf(count));
         adapter.notifyDataSetChanged();
+
         calculate();
     }
+
 
     @Override
     public void childDelete(int groupPosition, int childPosition) {
         StoreInfo group = groups.get(groupPosition);
         List<GoodsInfo> child = childs.get(group.getId());
-        child.remove(childPosition);
-        if (child.size() == 0) {
-            groups.remove(groupPosition);
-        }
+
+        //childPosition 并不是id
+        ContentValues values = new ContentValues();
+        values.put("isSub", "0");
+        String id = child.get(childPosition).getId();
+        GoodsInfo goodsInfo = child.get(childPosition);
+        goodsInfo.setGoodsInfo(mContext, values, id);
+
+
+        Log.i(TAG, "onClick: childPosition is: " + childPosition);
+        Log.i(TAG, "onClick: goodsInfo is: " + goodsInfo.getGoodsImg());
+
+        initData();
+        initEvents();
+
+//        child.remove(childPosition);
+
+//        if (child.size() == 0) {
+//            groups.remove(groupPosition);
+//        }
+
         adapter.notifyDataSetChanged();
         calculate();
     }
@@ -394,6 +413,7 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
     private void calculate() {
         mTotalPrice = 0.00;
         mTotalCount = 0;
+
         for (int i = 0; i < groups.size(); i++) {
             StoreInfo group = groups.get(i);
             List<GoodsInfo> child = childs.get(group.getId());

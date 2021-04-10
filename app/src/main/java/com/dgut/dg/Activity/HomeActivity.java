@@ -91,8 +91,8 @@ public class HomeActivity extends AppCompatActivity {
 
         while (cursor.moveToNext()){
             result =  cursor.getString(cursor.getColumnIndex("id"));
+            //已经有数据
             if (result.equals("0")){
-                Log.i(TAG, "insertGoodsInfo: %% "+ cursor.getString(cursor.getColumnIndex("imageUrl")));
                 flag = true;
                 break;
             }
@@ -100,10 +100,11 @@ public class HomeActivity extends AppCompatActivity {
 
         if (!flag){
 
-            int[] img = {R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz, R.drawable.cmaz};
+            int[] img = new int[]{R.mipmap.image01,R.mipmap.image02,R.mipmap.image03,R.mipmap.image04,
+                    R.mipmap.image05,R.mipmap.image06,R.mipmap.image07,R.mipmap.image08};
 
             //数据的数量
-            int N=5;
+            int N=img.length;
 
             for(int i =0; i<N; i++){
                 ContentValues contentValues = new ContentValues();
@@ -113,13 +114,14 @@ public class HomeActivity extends AppCompatActivity {
                 contentValues.put("isSelected", 0);
                 contentValues.put("imageUrl", "https://python.com");
                 contentValues.put("descGoods", "beautiful");
-                contentValues.put("price", 255.0 + new Random().nextInt(3000));
+                contentValues.put("price", 5 + new Random().nextInt(10));
                 contentValues.put("prime_price", 1555.0 + new Random().nextInt(3000));
                 contentValues.put("position", new Random().nextInt(20));
-                contentValues.put("count", new Random().nextInt(50));
+                contentValues.put("count", 1);
                 contentValues.put("color", "red");
                 contentValues.put("size", "10");
                 contentValues.put("goodsImg", img[i%img.length]);
+                contentValues.put("isSub", 0);
 
                 long rowId = db.insert("goods", null, contentValues);
                 if (rowId != -1){

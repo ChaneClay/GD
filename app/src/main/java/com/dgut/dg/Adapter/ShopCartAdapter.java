@@ -1,11 +1,13 @@
 package com.dgut.dg.Adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StrikethroughSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ import com.dgut.dg.Utils.UtilsLog;
 import com.dgut.dg.entity.GoodsInfo;
 import com.dgut.dg.entity.StoreInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +52,8 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
     private int count = 0;
     private boolean flag=true; //组的编辑按钮是否可见，true可见，false不可见
 
+    String TAG = "TAG";
+
 
     public ShopCartAdapter(List<StoreInfo> groups, Map<String, List<GoodsInfo>> childrens, Context mContext) {
         this.groups = groups;
@@ -58,9 +63,12 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
+
         return groups.size();
     }
 
+
+    // 返回总的大小
     @Override
     public int getChildrenCount(int groupPosition) {
         String groupId = groups.get(groupPosition).getId();
@@ -72,10 +80,14 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
         return groups.get(groupPosition);
     }
 
+
+    // 这里进行筛选
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        List<GoodsInfo> childs = childrens.get(groups.get(groupPosition).getId());
-        return childs.get(childPosition);
+
+        List<GoodsInfo> child = childrens.get(groups.get(groupPosition).getId());
+
+        return child.get(childPosition);
     }
 
     @Override
@@ -104,6 +116,8 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
+
+
         final StoreInfo group = (StoreInfo) getGroup(groupPosition);
 
 
@@ -157,6 +171,8 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
 
+
+
         /**
          * 根据组的编辑按钮的可见与不可见，去判断是组对下辖的子元素编辑  还是ActionBar对组的下瞎元素的编辑
          * 如果组的编辑按钮可见，那么肯定是组对自己下辖元素的编辑
@@ -192,7 +208,9 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
             childViewHolder.goodsName.setText(child.getDesc());
             childViewHolder.goodsPrice.setText("￥" + child.getPrice() + "");
             childViewHolder.goodsNum.setText(String.valueOf(child.getCount()));
-            childViewHolder.goodsImage.setImageResource(R.drawable.cmaz);
+
+            childViewHolder.goodsImage.setImageResource(child.getGoodsImg());
+
             childViewHolder.goods_size.setText("颜色:" + child.getColor() + "  尺寸:" + child.getSize());
             //设置打折前的原价
             SpannableString spannableString = new SpannableString("￥" + child.getPrime_price() + "");
@@ -244,6 +262,19 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
+//                                    ContentValues values = new ContentValues();
+//                                    values.put("isSub", "0");
+//
+//                                    String groupId = groups.get(groupPosition).getId();
+//                                    GoodsInfo goodsInfo = childrens.get(groupId).get(childPosition);
+//                                    goodsInfo.setGoodsInfo(mContext, values, String.valueOf(childPosition));
+//
+//                                    Log.i(TAG, "onClick: childPosition is: " + childPosition);
+//                                    Log.i(TAG, "onClick: goodsInfo is: " + goodsInfo.getPrice());
+
+
+
                                     modifyCountInterface.childDelete(groupPosition,childPosition);
                                 }
                             })
@@ -266,11 +297,24 @@ public class ShopCartAdapter extends BaseExpandableListAdapter {
     private void showDialog(final int groupPosition, final int childPosition, final View showCountView,final  boolean isChecked, final  GoodsInfo child) {
         final AlertDialog.Builder alertDialog_Builder=new AlertDialog.Builder(mContext);
         View view= LayoutInflater.from(mContext).inflate(R.layout.dialog_change_num,null);
+
         final AlertDialog  dialog=alertDialog_Builder.create();
-        dialog.setView(view);//errored,这里是dialog，不是alertDialog_Buidler
+        dialog.setView(view);       //errored,这里是dialog，不是alertDialog_Buidler
         count=child.getCount();
         final EditText num= (EditText) view.findViewById(R.id.dialog_num);
+
         num.setText(count+"");
+
+//        Log.i(TAG, "showDialog: count is " + count);
+//        ContentValues values = new ContentValues();
+//        values.put("count", count);
+//        child.setGoodsInfo(mContext, values, child.getId());
+
+
+
+
+
+
         //自动弹出键盘
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override

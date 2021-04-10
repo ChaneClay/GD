@@ -31,18 +31,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void insertGoodsInfo(SQLiteDatabase sqLiteDatabase) {
-        Log.i(TAG, "insertGoodsInfo: ----222");
         String sql = "create table goods(id varchar(5), name varchar(20), isSelected boolean, " +
                 "imageUrl varchar(50), descGoods varchar(20), price double," +
                 "prime_price double, position int, count int," +
-                "color varchar(10), size varchar(10), goodsImg int)";
+                "color varchar(10), size varchar(10), goodsImg int, isSub int)";
         sqLiteDatabase.execSQL(sql);
+        Log.i(TAG, "insertGoodsInfo: 成功创建goods表");
     }
 
     public void insertPersonInfo(SQLiteDatabase sqLiteDatabase){
-        Log.i(TAG, "insertGoodsInfo: ----333");
         String sql = "create table user(email varchar(20), name varchar(20), gender varchar(20), age int, height double, weight double)";
         sqLiteDatabase.execSQL(sql);
+        Log.i(TAG, "insertGoodsInfo: 成功创建user表");
+
     }
 
 }
