@@ -42,6 +42,7 @@ public class NewsFragment extends Fragment {
                 mDatas.clear();
                 String json = (String) msg.obj;
                 NewsBean newsBean = new Gson().fromJson(json, NewsBean.class);
+//                NewsBean newsBean = null;
 
                 if(newsBean != null){
                     NewsBean.ResultDTO result = newsBean.getResult();
@@ -51,8 +52,6 @@ public class NewsFragment extends Fragment {
                             mDatas.add(data.get(i));
                         }
                     }
-
-
 
                 }
 

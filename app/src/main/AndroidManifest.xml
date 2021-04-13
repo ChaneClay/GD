@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <activity android:name=".Activity.ShopDetailsActivity"></activity>
+        <activity android:name=".Activity.InfoDetailActivity"></activity>
+        <activity android:name=".Activity.ShopDetailsActivity" />
         <activity android:name=".Activity.CodeVerifyActivity" />
         <activity android:name=".Activity.NewsDetailsActivity" />
         <activity

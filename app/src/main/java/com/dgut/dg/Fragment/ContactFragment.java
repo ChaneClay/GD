@@ -62,7 +62,7 @@ public class ContactFragment extends Fragment {
         names = new ArrayList<>();
         names.add("运动器械");
         names.add("购物车");
-        names.add("购买记录");
+//        names.add("购买记录");
     }
 
 }

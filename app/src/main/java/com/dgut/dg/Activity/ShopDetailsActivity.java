@@ -3,34 +3,51 @@ package com.dgut.dg.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ScrollingView;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dgut.dg.R;
-import com.dgut.dg.Utils.DatabaseHelper;
 import com.dgut.dg.entity.GoodsInfo;
 
-import java.util.HashMap;
-import java.util.Map;
+import butterknife.BindView;
 
-public class ShopDetailsActivity extends AppCompatActivity {
+public class ShopDetailsActivity extends AppCompatActivity implements GradationScrollView.ScrollViewListener{
 
 
-    private ImageView mIvShop;
-    private Button mBtBuy;
-    private Button mBtSub;
+    private ImageView ivGoodDetailImg;
+    private TextView tvGoodDetailShopCart;
+    private TextView tvGoodDetailBuy;
+    private ImageView ivGoodDetailBack;
+
+    RelativeLayout llTitle;
+    TextView tvGoodTitle;
+    ImageView iv;
+    ActionBar bar;
 
 
     GoodsInfo goodsInfos[];
     GoodsInfo goodsInfo;
+    private int height;
+    GradationScrollView scrollView;
 
 
     @Override
@@ -38,48 +55,35 @@ public class ShopDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_details);
 
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         goodsInfos = new GoodsInfo().getGoodsInfo(getApplicationContext());
-        mIvShop = findViewById(R.id.iv_shop);
         int id = Integer.parseInt(bundle.getString("id"));
         goodsInfo = goodsInfos[id];
-        mIvShop.setImageResource(goodsInfo.getGoodsImg());
 
-        mBtBuy = findViewById(R.id.bt_buy);
-        mBtSub = findViewById(R.id.bt_subscribe);
+        ivGoodDetailImg = findViewById(R.id.iv_good_detai_img);
+        ivGoodDetailImg.setImageResource(goodsInfo.getGoodsImg());
 
-        ActionBar bar = getSupportActionBar();
-        bar.setTitle("返回");
-        bar.setDisplayHomeAsUpEnabled(true);
-        bar.setDisplayShowHomeEnabled(false);
-
+        // 购物车
+        tvGoodDetailShopCart = findViewById(R.id.tv_good_detail_shop_cart);
 
         if (goodsInfo.getIsSub() == 1){
-            mBtSub.setText("已订阅");
+            tvGoodDetailShopCart.setText("已订阅");
         }else {
-            mBtSub.setText("订阅");
+            tvGoodDetailShopCart.setText("订阅");
         }
 
-
-        mBtBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ShopDetailsActivity.this, "进入购买页面", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // 收藏
-        mBtSub.setOnClickListener(new View.OnClickListener() {
+        tvGoodDetailShopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 ContentValues values = new ContentValues();
                 if (goodsInfo.getIsSub() == 1){
-                    mBtSub.setText("订阅");
+                    tvGoodDetailShopCart.setText("订阅");
                     values.put("isSub", "0");
                 }else {
-                    mBtSub.setText("已订阅");
+                    tvGoodDetailShopCart.setText("已订阅");
                     values.put("isSub", "1");
                 }
 
@@ -88,19 +92,81 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
             }
         });
+
+
+        // 购买
+        tvGoodDetailBuy = findViewById(R.id.tv_good_detail_buy);
+        tvGoodDetailBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ShopDetailsActivity.this, "进入购买页面", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+        bar = getSupportActionBar();
+        bar.hide();
+
+        ivGoodDetailBack = findViewById(R.id.iv_good_detail_back);
+        ivGoodDetailBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+
+            }
+        });
+
+
+
+        llTitle = findViewById(R.id.llTitle);
+        iv = findViewById(R.id.iv_good_detai_img);
+        initListeners();
+
+
+
     }
 
-    // 页面返回键
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-                break;
 
-            default:
-                break;
+
+    private void initListeners() {
+
+
+        ViewTreeObserver vto = iv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                llTitle = findViewById(R.id.llTitle);
+                llTitle.getViewTreeObserver().removeGlobalOnLayoutListener(
+                        this);
+                height = iv.getHeight();
+                scrollView = findViewById(R.id.scrollview);
+                scrollView.setScrollViewListener(ShopDetailsActivity.this);
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
+
+        if (y <= 0) {   //设置标题的背景颜色
+            llTitle.setBackgroundColor(Color.argb((int) 0, 255,255,255));
+        } else if (y > 0 && y <= height) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+
+            float scale = (float) y / height;
+            float alpha = (255 * scale);
+
+            tvGoodTitle = findViewById(R.id.tv_good_detail_title_good);
+
+            tvGoodTitle.setTextColor(Color.argb((int) alpha, 1,24,28));
+            llTitle.setBackgroundColor(Color.argb((int) alpha, 255,255,255));
+        } else {    //滑动到banner下面设置普通颜色
+            llTitle.setBackgroundColor(Color.argb((int) 255, 255,255,255));
         }
-        return super.onOptionsItemSelected(item);
+
+
     }
 }

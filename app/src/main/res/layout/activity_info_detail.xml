@@ -1,0 +1,230 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp">
+
+<!--        滑动过程中显示出来的图片-->
+        <ImageView
+            android:src="@mipmap/head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardview_dark_background"/>
+
+        <LinearLayout
+            android:id="@+id/mainheadview"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/login_background"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:src="@mipmap/head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"/>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+<!--    设置全局颜色-->
+    <LinearLayout
+        android:id="@+id/myscrollLinearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        android:clickable="true"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/white">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
+                android:text="守护天使"
+                android:textColor="#DB4E61"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="66dp"
+                android:layout_toStartOf="@+id/imageView"
+                android:gravity="center_vertical"
+                android:text="暂时没有守护天使"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="20dp"
+                android:paddingBottom="34dp"
+                android:paddingTop="34dp"
+                android:src="@mipmap/image02"/>
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            >
+
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="昵称"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:hint="昵称"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="个性签名"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="个人相册"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+          />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="私房视频"
+                android:textColor="#DB4E61"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="start"
+                android:text="别人每查看你的一个私房视频，你讲获得100朵鲜花"
+                android:textColor="#C0C0C0"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:gravity="center_vertical"
+                android:text="缘分印象"
+                android:textColor="#C0C0C0"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Ta还没有缘分印象"
+                android:textColor="#C0C0C0"/>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/mainactionbar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+        <ImageView
+            android:id="@+id/userinfo_topbar"
+            android:visibility="invisible"
+            android:background="#99064E9A"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageButton
+            android:id="@+id/userInfo_returnBtn"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/left_arrow"/>
+    </RelativeLayout>
+</RelativeLayout>
