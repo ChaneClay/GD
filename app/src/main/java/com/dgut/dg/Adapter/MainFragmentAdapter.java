@@ -11,14 +11,17 @@ import com.dgut.dg.Fragment.ContactFragment;
 import com.dgut.dg.Fragment.FindFragment;
 import com.dgut.dg.Fragment.MeFragment;
 import com.dgut.dg.Fragment.MsgFragment;
-
+import com.dgut.dg.Fragment.PlanFragment;
 
 
 public class MainFragmentAdapter extends FragmentPagerAdapter {
 
+    private int mCount;
 
-    public MainFragmentAdapter(@NonNull FragmentManager fm) {
+
+    public MainFragmentAdapter(@NonNull FragmentManager fm, int count) {
         super(fm);
+        this.mCount = count;
     }
 
 
@@ -26,7 +29,6 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
 
         Fragment fragment = null;
         switch (position){
@@ -37,9 +39,12 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
                 fragment = new ContactFragment();
                 break;
             case 2:
-                fragment = new FindFragment();
+                fragment = new PlanFragment();
                 break;
             case 3:
+                fragment = new FindFragment();
+                break;
+            case 4:
                 fragment = new MeFragment();
                 break;
             default:
@@ -53,6 +58,6 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return mCount;
     }
 }

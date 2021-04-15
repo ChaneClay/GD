@@ -11,10 +11,7 @@ import com.dgut.dg.Utils.DatabaseHelper;
 
 import java.util.Map;
 
-/**
- * Created by Administrator on 2017/3/26.
- * 商品信息
- */
+
 
 public class GoodsInfo {
     private String id;
@@ -29,7 +26,6 @@ public class GoodsInfo {
     private String color;
     private String size;
     private int goodsImg;
-
 
 
     public String getTAG() {
@@ -48,7 +44,7 @@ public class GoodsInfo {
 
     public GoodsInfo[] getGoodsInfo(Context context) {
 
-        DatabaseHelper dbHelper = new DatabaseHelper(context, "userdb", null, 1);
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         int N=8;
@@ -86,7 +82,7 @@ public class GoodsInfo {
 
     public GoodsInfo setGoodsInfo(Context context, ContentValues values, String id){
 
-        DatabaseHelper dbHelper = new DatabaseHelper(context, "userdb", null, 1);
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         db.update("goods", values, "id=?", new String[]{id});

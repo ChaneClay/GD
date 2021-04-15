@@ -5,6 +5,7 @@
 
     <string name="menu_msg">资讯</string>
     <string name="menu_contact">商城</string>
+    <string name="menu_plan">计划</string>
     <string name="menu_find">社区</string>
     <string name="menu_me">个人资料</string>
 
@@ -13,5 +14,20 @@
     <string name="actionBar_edit" translatable="false">编辑</string>
     <string name="all" translatable="false">全选</string>
     <string name="order_total" translatable="false">合计 :</string>
+
+
+
+
+
+
+    <!--    个人信息（编辑信息）-->
+    <string name="my_id">ID号</string>
+    <string name="my_name2">昵称</string>
+    <string name="my_region">地区</string>
+    <string name="my_gender">性别</string>
+    <string name="my_brithday">生日</string>
+
+
+
 
 </resources>

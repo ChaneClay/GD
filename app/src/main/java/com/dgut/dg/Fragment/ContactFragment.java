@@ -48,7 +48,6 @@ public class ContactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         ButterKnife.bind(this, view);
 
-        // 这里的actionBar有没有问题
         adapter = new ShopAdapter(getChildFragmentManager());
 
         viewPager.setAdapter(adapter);
@@ -62,7 +61,7 @@ public class ContactFragment extends Fragment {
         names = new ArrayList<>();
         names.add("运动器械");
         names.add("购物车");
-//        names.add("购买记录");
+        names.add("已购买商品");
     }
 
 }

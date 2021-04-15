@@ -32,10 +32,10 @@ import butterknife.ButterKnife;
 public class HomeActivity extends AppCompatActivity {
 
     // 菜单标题
-    private final int[] TAB_TITLES = new int[]{R.string.menu_msg, R.string.menu_contact, R.string.menu_find, R.string.menu_me};
+    private final int[] TAB_TITLES = new int[]{R.string.menu_msg, R.string.menu_contact, R.string.menu_plan, R.string.menu_find, R.string.menu_me};
 
     // 菜单图标
-    private final int[] TAB_IMGS = new int[]{R.drawable.tab_main_msg_selector, R.drawable.tab_main_contact_selector, R.drawable.tab_main_find_selector
+    private final int[] TAB_IMGS = new int[]{R.drawable.tab_main_msg_selector, R.drawable.tab_main_contact_selector, R.drawable.tab_main_plan_selector, R.drawable.tab_main_find_selector
             , R.drawable.tab_main_me_selector};
 
 
@@ -62,11 +62,10 @@ public class HomeActivity extends AppCompatActivity {
         
 
         getSupportActionBar().hide();
-
         ButterKnife.bind(this);
 
         // 数据库操作
-        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this, "userdb", null, 1);
+        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this);
         db = dbHelper.getWritableDatabase();
 
         // 插入个人信息
@@ -211,10 +210,10 @@ public class HomeActivity extends AppCompatActivity {
             View view = inflater.inflate(R.layout.item_main_menu, null);
             tab.setCustomView(view);
 
-            TextView tvTitle = (TextView) view.findViewById(R.id.txt_tab);
+            TextView tvTitle = view.findViewById(R.id.txt_tab);
             tvTitle.setText(tabTitlees[i]);
 
-            ImageView imgTab = (ImageView) view.findViewById(R.id.img_tab);
+            ImageView imgTab = view.findViewById(R.id.img_tab);
             imgTab.setImageResource(tabImgs[i]);
 
             tabLayout.addTab(tab);
@@ -229,7 +228,7 @@ public class HomeActivity extends AppCompatActivity {
         // ViewPager需要设置一个Adapter，该Adapter需要返回不同的fragment（比如页面切换）
 
 
-        adapter = new MainFragmentAdapter(getSupportFragmentManager());
+        adapter = new MainFragmentAdapter(getSupportFragmentManager(), TAB_TITLES.length);
         viewPager.setAdapter(adapter);
 
         // 关联切换

@@ -1,14 +1,18 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.InfoDetailActivity"
     android:orientation="vertical"
     android:background="@color/white">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="260dp">
 
-<!--        滑动过程中显示出来的图片-->
+        <!--        滑动过程中显示出来的图片-->
         <ImageView
             android:src="@mipmap/head"
             android:layout_width="match_parent"
@@ -16,7 +20,7 @@
             android:background="@color/cardview_dark_background"/>
 
         <LinearLayout
-            android:id="@+id/mainheadview"
+            android:id="@+id/mainHeadView"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,18 +33,19 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"/>
 
-
         </LinearLayout>
     </RelativeLayout>
 
-<!--    设置全局颜色-->
+    <!--    设置全局颜色-->
     <LinearLayout
-        android:id="@+id/myscrollLinearlayout"
+        android:id="@+id/myScrollLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#EEEEEE"
         android:clickable="true"
         android:orientation="vertical">
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -82,29 +87,24 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            >
-
-        </View>
+            android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:background="@android:color/white"
             android:orientation="horizontal">
             <TextView
+                android:gravity="center_vertical"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="昵称"
-                android:textColor="#C0C0C0"
-                android:textSize="14sp"/>
+                android:text="昵称" />
 
             <EditText
                 android:hint="昵称"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 
@@ -116,75 +116,110 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="个性签名"
-                android:textColor="#C0C0C0"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"/>
+                android:text="个性签名"/>
+
+            <EditText
+                android:hint="昵称"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            />
+            android:layout_marginTop="15dp"/>
+
+<!--        新修改-->
+
+<!--        生日-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="个人相册"
-                android:textColor="#C0C0C0"
-                android:textSize="14sp"/>
+                android:text="生日"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"/>
 
+            <TextView
+                android:id="@+id/tv_birth"
+                android:gravity="center_vertical"
+                android:hint="生日日期"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-          />
-
+<!--        性别-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="50dp"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
                 android:gravity="center_vertical"
-                android:text="私房视频"
-                android:textColor="#DB4E61"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="start"
-                android:text="别人每查看你的一个私房视频，你讲获得100朵鲜花"
-                android:textColor="#C0C0C0"
-                android:textSize="10sp"/>
+                android:text="性别"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"/>
 
+            <TextView
+                android:id="@+id/tv_gender"
+                android:gravity="center_vertical"
+                android:hint="性别"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
         </LinearLayout>
+
+
+<!--        身高、体重-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="身高、体重"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_hei_wei"
+                android:gravity="center_vertical"
+                android:hint="身高、体重"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+<!--        常住地址-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center_vertical"
+                android:text="地址"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:gravity="center_vertical"
+                android:hint="地址"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            />
+            android:layout_marginTop="15dp"/>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -208,12 +243,16 @@
                 android:textColor="#C0C0C0"/>
         </LinearLayout>
     </LinearLayout>
+
+
+
+    <!--    顶部返回-->
     <RelativeLayout
-        android:id="@+id/mainactionbar"
+        android:id="@+id/mainActionBar"
         android:layout_width="match_parent"
         android:layout_height="55dp">
         <ImageView
-            android:id="@+id/userinfo_topbar"
+            android:id="@+id/userInfo_topBar"
             android:visibility="invisible"
             android:background="#99064E9A"
             android:layout_width="match_parent"
@@ -227,4 +266,6 @@
             android:scaleType="fitCenter"
             android:src="@drawable/left_arrow"/>
     </RelativeLayout>
+
+
 </RelativeLayout>

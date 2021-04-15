@@ -6,15 +6,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import static com.dgut.dg.Adapter.VideoDetailRecyclerViewAdapter.TAG;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public DatabaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+
+
+    private static final String DB_NAME = "user_db"; //数据库名称
+    private static final int DB_VERSION = 1;//数据库版本,大于0
+
+    // 默认数据库
+    public DatabaseHelper(@Nullable Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
+
+
+    public DatabaseHelper(Context context, String dbName){
+        super(context, dbName, null, DB_VERSION);
+    }
+
 
 
     @Override
@@ -25,8 +36,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // 第一次使用数据库时调用该方法
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        insertGoodsInfo(sqLiteDatabase);
-        insertPersonInfo(sqLiteDatabase);
+        insertGoodsInfo(sqLiteDatabase);        // 插入商品信息
+        insertPersonInfo(sqLiteDatabase);       // 插入用户信息
+        insertStepInfo(sqLiteDatabase);         // 插入步数信息
 
     }
 
@@ -45,5 +57,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG, "insertGoodsInfo: 成功创建user表");
 
     }
+
+    // 存储步数
+    public void insertStepInfo(SQLiteDatabase sqLiteDatabase){
+        String sql = "create table step ("
+                + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "curDate TEXT, "
+                + "totalSteps TEXT)";
+
+        sqLiteDatabase.execSQL(sql);
+        Log.i(TAG, "insertGoodsInfo: 成功创建step表");
+
+
+
+    }
+
 
 }
