@@ -7,11 +7,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 
-/**
- * Created by fySpring
- * Date : 2017/3/24
- * To do :检测手机是否支持计步工具类
- */
 
 public class StepCountCheckUtil {
 

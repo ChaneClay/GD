@@ -2,62 +2,83 @@ package com.dgut.dg.entity;
 
 
 
-
 public class PersonalInfo {
 
-    private static String email;
-    private static String name;
-    private static String gender;
-    private static int age;
-    private static double height;
-    private static double weight;
+    private String email;
+    private String name;
+    private String gender;
+    private String birthday;
+    private int height;
+    private int weight;
+    private String address;
 
-    public static String getEmail() {
+
+
+    public PersonalInfo(String email, String name, String gender, String birthday, int height, int weight, String address) {
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.height = height;
+        this.weight = weight;
+        this.address = address;
+    }
+
+
+    public String getEmail() {
         return email;
     }
 
-    public static void setEmail(String email) {
-        PersonalInfo.email = email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public static String getName() {
+    public String getName() {
         return name;
     }
 
-    public static void setName(String name) {
-        PersonalInfo.name = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static String getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public static void setGender(String gender) {
-        PersonalInfo.gender = gender;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public static int getAge() {
-        return age;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public static void setAge(int age) {
-        PersonalInfo.age = age;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public static double getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public static void setHeight(double height) {
-        PersonalInfo.height = height;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
-    public static double getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public static void setWeight(double weight) {
-        PersonalInfo.weight = weight;
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
 }

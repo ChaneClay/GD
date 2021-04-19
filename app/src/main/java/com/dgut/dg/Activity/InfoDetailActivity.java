@@ -3,6 +3,8 @@ package com.dgut.dg.Activity;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,14 +13,19 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
@@ -28,10 +35,13 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.dgut.dg.Application.MyApplication;
+import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.CardBean;
 import com.dgut.dg.Utils.GetJsonDataUtil;
 import com.dgut.dg.Utils.JsonBean;
+import com.dgut.dg.entity.PersonalInfo;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -42,23 +52,27 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static com.dgut.dg.Activity.NewsDetailsActivity.TAG;
+
 
 public class InfoDetailActivity extends Activity implements View.OnClickListener{
     LinearLayout myScrollLinearLayout;
-    LinearLayout mainHeadView; //顶部个人资料视图
-    RelativeLayout mainActionBar; //顶部菜单栏
+    LinearLayout mainHeadView;          //顶部个人资料视图
+    RelativeLayout mainActionBar;       //顶部菜单栏
 
 
     private ImageButton userInfoReturnBtn;
 
+    private PersonalInfoDao personalInfoDao;
+    private PersonalInfo personalInfo;
 
 
     int Y;
-    int position = 0; //拖动LinearLayout的距离Y轴的距离
-    int scrollViewDistanceToTop = 0; //headView的高
+    int position = 0;                   //拖动LinearLayout的距离Y轴的距离
+    int scrollViewDistanceToTop = 0;    //headView的高
     int menuBarHeight = 0;
-    int chufaHeight = 0; //需要触发动画的高
-    float scale; //像素密度
+    int chufaHeight = 0;        //需要触发动画的高
+    float scale;                //像素密度
     int headViewPosition = 0;
     ImageView userInfo_topBar;
     static boolean flag = true;
@@ -69,10 +83,15 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
 
 
     private TextView mTvGender;     // 性别
-    private TextView mTvHeiWei;     // 身高和体重
     private TextView mAddress;      // 地址
     private TextView mBirth;        // 生日
+    private TextView mHeight;
+    private TextView mWeight;
 
+
+    private TextView mName;
+    private Button mBtnSave;
+    private Button mBtnCancel;
 
 
 
@@ -95,20 +114,29 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     private static boolean isLoaded = false;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_detail);
 
+        personalInfoDao = new PersonalInfoDao(getApplicationContext());
+        personalInfo = personalInfoDao.getPersonalInfo();
+
         initView();
         initData();
-
 
 
     }
 
     private void initData() {
 
+        mName.setText(personalInfo.getName());
+        mBirth.setText(personalInfo.getBirthday());
+        mAddress.setText(personalInfo.getAddress());
+        mTvGender.setText(personalInfo.getGender());
+        mHeight.setText(personalInfo.getHeight()+"cm");
+        mWeight.setText(personalInfo.getWeight()+"kg");
     }
 
 
@@ -134,18 +162,25 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
         getOptionData();
         initLunarPicker();
         initCustomOptionPicker();
-        initNoLinkOptionsPicker();
 
         mTvGender = findViewById(R.id.tv_gender);
-        mTvHeiWei = findViewById(R.id.tv_hei_wei);
         mAddress = findViewById(R.id.tv_address);
         mBirth = findViewById(R.id.tv_birth);
+        mName = findViewById(R.id.tv_name);
+        mHeight = findViewById(R.id.tv_height);
+        mWeight = findViewById(R.id.tv_weight);
+        mBtnSave = findViewById(R.id.btn_save);
+        mBtnCancel = findViewById(R.id.btn_cancel);
+
 
 
         mTvGender.setOnClickListener(this);
-        mTvHeiWei.setOnClickListener(this);
         mAddress.setOnClickListener(this);
         mBirth.setOnClickListener(this);
+        mHeight.setOnClickListener(this);
+        mWeight.setOnClickListener(this);
+        mBtnSave.setOnClickListener(this);
+        mBtnCancel.setOnClickListener(this);
 
 
         userInfoReturnBtn.setOnClickListener(new View.OnClickListener() {
@@ -179,8 +214,8 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
                             }
                             int temp = position += tempY;
                             myScrollLinearLayout.setY(temp);
-                            int headviewtemp = headViewPosition += (tempY/5);
-                            mainHeadView.setY(headviewtemp);
+                            int headViewTemp = headViewPosition += (tempY/5);
+                            mainHeadView.setY(headViewTemp);
                         }
                         //顶部的动画效果
                         if ((myScrollLinearLayout.getY() <= chufaHeight) && (flag == true)) {
@@ -201,6 +236,8 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
         });
     }
 
+
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.tv_gender && pvCustomOptions != null) {
@@ -208,12 +245,7 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
             // 条件选择自定义布局
             pvCustomOptions.show(); //弹出自定义条件选择器
 
-        }else if (v.getId() == R.id.tv_hei_wei && pvNoLinkOptions != null) {//不联动数据选择器
-
-            // 条件选择不联动
-            pvNoLinkOptions.show();
-
-        } else if (v.getId() == R.id.tv_address) {//跳转到 省市区解析示例页面
+        }else if (v.getId() == R.id.tv_address) {//跳转到 省市区解析示例页面
             // 地址
             loadData();
 
@@ -221,9 +253,80 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
 
             // 日期
             pvCustomLunar.show();
+        }else if(v.getId() == R.id.btn_save){
+            // 保存资料
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("name", mName.getText()+"");
+            contentValues.put("birthday", mBirth.getText()+"");
+            contentValues.put("gender", mTvGender.getText()+"");
+            contentValues.put("address", mAddress.getText()+"");
+
+            String height = mHeight.getText()+"";
+
+            Log.i(TAG, "onClick: height is ---- " + height);
+            int real_height = Integer.parseInt(height.replace("cm", ""));
+            Log.i(TAG, "onClick: real_height is ---- " + real_height);
+
+            contentValues.put("height", real_height);
+            Log.i(TAG, "onClick: real_height" + real_height);
+
+
+            String weight = mWeight.getText() + "";
+
+
+            Log.i(TAG, "onClick: weight is ---- " + weight);
+            int real_weight = Integer.parseInt(weight.replace("kg", ""));
+            Log.i(TAG, "onClick: real_weight is ---- " + real_weight);
+
+
+
+            contentValues.put("weight", real_weight);
+            Log.i(TAG, "onClick: real_weight" + real_weight);
+
+
+            personalInfo = personalInfoDao.updatePersonalInfo(contentValues, MyApplication.getCurrEmail());
+            initData();
+            Toast.makeText(getApplicationContext(), "成功保存数据", Toast.LENGTH_SHORT).show();
+
+
+        }else if(v.getId() == R.id.btn_cancel){
+            // 取消
+            initData();
+
+        }else if(v.getId() == R.id.tv_height || v.getId() == R.id.tv_weight){
+
+            Intent intent = new Intent(InfoDetailActivity.this, TestCircleWheelViewActivity.class);
+            Bundle bundle = new Bundle();
+            if (v.getId() == R.id.tv_height){
+                bundle.putString("flag", "0");
+            }else {
+                bundle.putString("flag", "1");
+            }
+
+            intent.putExtras(bundle);
+
+            startActivityForResult(intent, 0x123);
+
+
         }else {
             Log.e("TAG", "onClick: 没有符合条件的" );
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 0x123 && resultCode == 0x123){
+            Bundle bundle = data.getExtras();
+            String height = bundle.getString("height");
+            mHeight.setText(height);
+        }else if(requestCode == 0x123 && resultCode == 0x456){
+            Bundle bundle = data.getExtras();
+            String weight = bundle.getString("weight");
+            mWeight.setText(weight);
+        }
+
     }
 
     private void loadData(){
@@ -235,8 +338,9 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
                     initJsonData();
                 }
             });
-            thread.start();
+
         }
+        thread.start();
     }
 
 
@@ -253,7 +357,10 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
         pvCustomLunar = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
-                Toast.makeText(InfoDetailActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
+
+                mBirth.setText(getTime(date));
+
+//                Toast.makeText(InfoDetailActivity.this, getTime(date), Toast.LENGTH_SHORT).show();
             }
         })
                 .setDate(selectedDate)
@@ -329,9 +436,6 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     // 符合条件 性别
     private void getCardData() {
 
-//        for (int i = 0; i < 5; i++) {
-//            cardItem.add(new CardBean(i, "No.ABC12345 " + i));
-//        }
         cardItem.add(new CardBean(0, "男"));
         cardItem.add(new CardBean(1, "女"));
         cardItem.add(new CardBean(2, "保密"));
@@ -362,11 +466,12 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示
-        Log.d("getTime()", "choice date millis: " + date.getTime());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Log.d("getTime()", "choice date millis: " + date.getTime());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
 
+    // 性别
     private void initCustomOptionPicker() {//条件选择器初始化，自定义布局
         /**
          * @description
@@ -423,31 +528,37 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     }
 
 
-    private void initNoLinkOptionsPicker() {// 不联动的多级选项
-        pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
-                String str = "food:" + food.get(options1)
-                        + "\nclothes:" + clothes.get(options2)
-                        + "\ncomputer:" + computer.get(options3);
-
-                Toast.makeText(InfoDetailActivity.this, str, Toast.LENGTH_SHORT).show();
-            }
-        })
-                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
-                    @Override
-                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
-                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
-                        Toast.makeText(InfoDetailActivity.this, str, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setItemVisibleCount(5)
-                .build();
-        pvNoLinkOptions.setNPicker(food, clothes, computer);
-        pvNoLinkOptions.setSelectOptions(0, 1, 1);
-    }
+    // 不联动的多级选项
+//    private void initNoLinkOptionsPicker() {
+//        pvNoLinkOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+//
+//
+//            @Override
+//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+//
+//                String str = "food:" + food.get(options1)
+//                        + "\nclothes:" + clothes.get(options2)
+//                        + "\ncomputer:" + computer.get(options3);
+//
+//                mTvHeiWei.setText(str);
+//
+////                Toast.makeText(InfoDetailActivity.this, str, Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//                .setOptionsSelectChangeListener(new OnOptionsSelectChangeListener() {
+//                    @Override
+//                    public void onOptionsSelectChanged(int options1, int options2, int options3) {
+//                        String str = "options1: " + options1 + "\noptions2: " + options2 + "\noptions3: " + options3;
+//                        mTvHeiWei.setText(str);
+//
+////                        Toast.makeText(InfoDetailActivity.this, str, Toast.LENGTH_SHORT).show();
+//                    }
+//                })
+//                .setItemVisibleCount(5)
+//                .build();
+//        pvNoLinkOptions.setNPicker(food, clothes, computer);
+//        pvNoLinkOptions.setSelectOptions(0, 1, 1);
+//    }
 
     //---------------------------------
     // 地址解析
@@ -488,7 +599,11 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
                         options3Items.get(options1).get(options2).get(options3) : "";
 
                 String tx = opt1tx + opt2tx + opt3tx;
-                Toast.makeText(InfoDetailActivity.this, tx, Toast.LENGTH_SHORT).show();
+
+                Log.i("TAG", "onOptionsSelect: 城市弹出！" + tx);
+                mAddress.setText(tx);
+
+//                Toast.makeText(InfoDetailActivity.this, tx, Toast.LENGTH_SHORT).show();
             }
         })
 

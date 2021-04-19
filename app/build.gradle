@@ -68,6 +68,7 @@ dependencies {
     implementation 'com.lqr.optionitemview:library:1.0.7'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
+    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
 
 
 

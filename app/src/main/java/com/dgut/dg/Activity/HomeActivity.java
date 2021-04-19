@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dgut.dg.Adapter.MainFragmentAdapter;
+import com.dgut.dg.Application.MyApplication;
+import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.DatabaseHelper;
 import com.dgut.dg.entity.PersonalInfo;
@@ -38,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
     private final int[] TAB_IMGS = new int[]{R.drawable.tab_main_msg_selector, R.drawable.tab_main_contact_selector, R.drawable.tab_main_plan_selector, R.drawable.tab_main_find_selector
             , R.drawable.tab_main_me_selector};
 
+    PersonalInfoDao personalInfoDao;
+//    PersonalInfo personalInfo;
 
     String TAG = "HomeActivity";
 
@@ -52,21 +57,44 @@ public class HomeActivity extends AppCompatActivity {
     private long exitTime;
 
     private SQLiteDatabase db;
+    private String email;
     
 
-    // 当第一次创建数据库时回调该方法
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        
+
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        if (bundle == null){
+
+            //不通过邮箱直接进来的
+            email = MyApplication.getCurrEmail();
+        }else {
+            email = bundle.getString("email");
+            MyApplication.setCurrEmail(email);
+        }
+
+
+
 
         getSupportActionBar().hide();
         ButterKnife.bind(this);
 
         // 数据库操作
         DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this);
+        DatabaseHelper dbHelper2 = new DatabaseHelper(HomeActivity.this, "test_db");
+
+
+
         db = dbHelper.getWritableDatabase();
+
+        personalInfoDao = new PersonalInfoDao(getApplicationContext());
+//        personalInfo = personalInfoDao.getPersonalInfo();
 
         // 插入个人信息
         insertData();
@@ -76,6 +104,9 @@ public class HomeActivity extends AppCompatActivity {
 
         initPager();
         setTabs(tabLayout, getLayoutInflater(), TAB_TITLES, TAB_IMGS);
+
+
+
 
     }
 
@@ -134,8 +165,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public void insertData(){
 
-        // 登陆的邮箱
-        String email = PersonalInfo.getEmail();
+
+
 
         String query = new StringBuilder().append("select * from user where email = '")
                 .append(email).append("'").toString();
@@ -145,59 +176,34 @@ public class HomeActivity extends AppCompatActivity {
         boolean flag = false;
 
         while (cursor.moveToNext()){
+            Log.i(TAG, "insertData: 进入while");
             result =  cursor.getString(cursor.getColumnIndex("email"));
-            if (result.equals(email)){
-                // 旧用户
-                PersonalInfo.setName(cursor.getString(cursor.getColumnIndex("name")));
-                PersonalInfo.setGender(cursor.getString(cursor.getColumnIndex("gender")));
-                PersonalInfo.setAge(cursor.getInt(cursor.getColumnIndex("age")));
-                PersonalInfo.setHeight(cursor.getDouble(cursor.getColumnIndex("height")));
-                PersonalInfo.setWeight(cursor.getDouble(cursor.getColumnIndex("weight")));
 
+            if (result.equals(email)){
                 flag = true;
                 break;
             }
         }
 
-        // 新用户
+
+        // 新用户，生成默认数据
+
         if (!flag){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    ContentValues contentValues = new ContentValues();
+            ContentValues contentValues = new ContentValues();
+            Log.i(TAG, "insertData: 新用户 " + email);
+            contentValues.put("email", email);
+            contentValues.put("name", "小白");
+            contentValues.put("gender", "男");
+            contentValues.put("birthday", "18");
+            contentValues.put("height", 175);
+            contentValues.put("weight", 65);
+            contentValues.put("address", "广东省东莞市");
 
-                    // 默认邮箱
-                    if (email == "" || email == null){
-                        PersonalInfo.setEmail("893461@qq.com");
-                    }
 
-                    // 用户名
-                    PersonalInfo.setName(new RandomData().getRandomString());
+            personalInfoDao.insertPersonalInfo(contentValues);
+            Log.i(TAG, "insertData: 新用户，成功插入数据");
 
-                    // 性别
-                    PersonalInfo.setGender("male");
-
-                    // 年龄
-                    PersonalInfo.setAge(18);
-
-                    // 身高
-                    PersonalInfo.setHeight(175.0);
-                    // 体重
-                    PersonalInfo.setWeight(65);
-
-                    contentValues.put("email", email);
-                    contentValues.put("name", PersonalInfo.getName());
-                    contentValues.put("gender", PersonalInfo.getGender());
-                    contentValues.put("age", PersonalInfo.getAge());
-                    contentValues.put("height", PersonalInfo.getHeight());
-                    contentValues.put("weight", PersonalInfo.getWeight());
-
-                    db.insert("user", null, contentValues);
-
-                }
-            }).run();
         }
-
 
 
 

@@ -26,80 +26,98 @@ public class GoodsInfo {
     private String color;
     private String size;
     private int goodsImg;
-
-
-    public String getTAG() {
-        return TAG;
-    }
-
-    public void setTAG(String TAG) {
-        this.TAG = TAG;
-    }
-
     private int isSub;
+
+
 
     String TAG = "TAG";
 
 
+    public GoodsInfo(String id, String name, boolean isSelected, String imageUrl, String desc, double price, double prime_price, int position, int count, String color, String size, int goodsImg, int isSub) {
+        this.id = id;
+        this.name = name;
+        this.isSelected = isSelected;
+        this.imageUrl = imageUrl;
+        this.desc = desc;
+        this.price = price;
+        this.prime_price = prime_price;
+        this.position = position;
+        this.count = count;
+        this.color = color;
+        this.size = size;
+        this.goodsImg = goodsImg;
+        this.isSub = isSub;
 
-    public GoodsInfo[] getGoodsInfo(Context context) {
+    }
 
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+    public GoodsInfo(){
 
-        int N=8;
-        GoodsInfo goodsInfo[] = new GoodsInfo[N];
-        for (int i = 0; i < goodsInfo.length; i++) {
-            goodsInfo[i] = new GoodsInfo();
-        }
-
-
-        String query = "select * from goods";
-        Cursor cursor = db.rawQuery(query, null);
-
-        int i=0;
-       while(cursor.moveToNext()){
-
-            goodsInfo[i].id = cursor.getString(cursor.getColumnIndex("id"));
-            goodsInfo[i].name = cursor.getString(cursor.getColumnIndex("name"));
-            goodsInfo[i].isSelected = cursor.getInt(cursor.getColumnIndex("isSelected")) == 0 ? false:true;
-            goodsInfo[i].imageUrl = cursor.getString(cursor.getColumnIndex("imageUrl"));
-            goodsInfo[i].desc = cursor.getString(cursor.getColumnIndex("descGoods"));
-            goodsInfo[i].price = cursor.getDouble(cursor.getColumnIndex("price"));
-            goodsInfo[i].prime_price = cursor.getDouble(cursor.getColumnIndex("prime_price"));
-            goodsInfo[i].position = cursor.getInt(cursor.getColumnIndex("position"));
-            goodsInfo[i].count = cursor.getInt(cursor.getColumnIndex("count"));
-            goodsInfo[i].color = cursor.getString(cursor.getColumnIndex("color"));
-            goodsInfo[i].size = cursor.getString(cursor.getColumnIndex("size"));
-            goodsInfo[i].goodsImg = cursor.getInt(cursor.getColumnIndex("goodsImg"));
-            goodsInfo[i].isSub = cursor.getInt(cursor.getColumnIndex("isSub"));
-            i++;
-        }
-
-        return goodsInfo;
     }
 
 
-    public GoodsInfo setGoodsInfo(Context context, ContentValues values, String id){
-
-        DatabaseHelper dbHelper = new DatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        db.update("goods", values, "id=?", new String[]{id});
-        Log.i(TAG, "setGoodsInfo: 成功修改数据！！！");
 
 
-        GoodsInfo goodsInfos[] = getGoodsInfo(context);
-        GoodsInfo goodsInfo = null;
-        for (int i = 0; i < goodsInfos.length; i++) {
-            goodsInfo = goodsInfos[i];
-            if (goodsInfo.getId().equals(id)){
-                return goodsInfos[i];
-            }
-        }
-        return goodsInfo;
-    }
 
+//
+//
+//    public GoodsInfo[] getGoodsInfo(Context context) {
+//
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//
+//        int N=8;
+//        GoodsInfo goodsInfo[] = new GoodsInfo[N];
+//        for (int i = 0; i < goodsInfo.length; i++) {
+//            goodsInfo[i] = new GoodsInfo();
+//        }
+//
+//
+//        String query = "select * from goods";
+//        Cursor cursor = db.rawQuery(query, null);
+//
+//        int i=0;
+//       while(cursor.moveToNext()){
+//
+//            goodsInfo[i].id = cursor.getString(cursor.getColumnIndex("id"));
+//            goodsInfo[i].name = cursor.getString(cursor.getColumnIndex("name"));
+//            goodsInfo[i].isSelected = cursor.getInt(cursor.getColumnIndex("isSelected")) == 0 ? false:true;
+//            goodsInfo[i].imageUrl = cursor.getString(cursor.getColumnIndex("imageUrl"));
+//            goodsInfo[i].desc = cursor.getString(cursor.getColumnIndex("descGoods"));
+//            goodsInfo[i].price = cursor.getDouble(cursor.getColumnIndex("price"));
+//            goodsInfo[i].prime_price = cursor.getDouble(cursor.getColumnIndex("prime_price"));
+//            goodsInfo[i].position = cursor.getInt(cursor.getColumnIndex("position"));
+//            goodsInfo[i].count = cursor.getInt(cursor.getColumnIndex("count"));
+//            goodsInfo[i].color = cursor.getString(cursor.getColumnIndex("color"));
+//            goodsInfo[i].size = cursor.getString(cursor.getColumnIndex("size"));
+//            goodsInfo[i].goodsImg = cursor.getInt(cursor.getColumnIndex("goodsImg"));
+//            goodsInfo[i].isSub = cursor.getInt(cursor.getColumnIndex("isSub"));
+//            i++;
+//        }
+//
+//        return goodsInfo;
+//    }
+
+//
+//    public GoodsInfo setGoodsInfo(Context context, ContentValues values, String id){
+//
+//        DatabaseHelper dbHelper = new DatabaseHelper(context);
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//
+//        db.update("goods", values, "id=?", new String[]{id});
+//        Log.i(TAG, "setGoodsInfo: 成功修改数据！！！");
+//
+//
+//        GoodsInfo goodsInfos[] = getGoodsInfo(context);
+//        GoodsInfo goodsInfo = null;
+//        for (int i = 0; i < goodsInfos.length; i++) {
+//            goodsInfo = goodsInfos[i];
+//            if (goodsInfo.getId().equals(id)){
+//                return goodsInfos[i];
+//            }
+//        }
+//        return goodsInfo;
+//    }
+//
 
 
 

@@ -25,6 +25,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dgut.dg.Dao.GoodsInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.entity.GoodsInfo;
 
@@ -50,6 +51,8 @@ public class ShopDetailsActivity extends AppCompatActivity implements GradationS
     GradationScrollView scrollView;
 
 
+    private GoodsInfoDao goodsInfoDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +61,14 @@ public class ShopDetailsActivity extends AppCompatActivity implements GradationS
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        goodsInfos = new GoodsInfo().getGoodsInfo(getApplicationContext());
+
+        goodsInfoDao = new GoodsInfoDao(getApplicationContext());
+        goodsInfos = goodsInfoDao.getGoodsInfo();
         int id = Integer.parseInt(bundle.getString("id"));
         goodsInfo = goodsInfos[id];
+
+
+
 
         ivGoodDetailImg = findViewById(R.id.iv_good_detai_img);
         ivGoodDetailImg.setImageResource(goodsInfo.getGoodsImg());
@@ -88,7 +96,9 @@ public class ShopDetailsActivity extends AppCompatActivity implements GradationS
                 }
 
                 // 直接返回更新后的对象
-                goodsInfo = goodsInfo.setGoodsInfo(getApplicationContext(), values, String.valueOf(id));
+                goodsInfo = goodsInfoDao.updateGoodsInfo(values, String.valueOf(id));
+
+//                goodsInfo = goodsInfo.setGoodsInfo(getApplicationContext(), values, String.valueOf(id));
 
             }
         });

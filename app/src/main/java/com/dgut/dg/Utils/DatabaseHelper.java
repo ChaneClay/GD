@@ -33,12 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    // 第一次使用数据库时调用该方法
+    // 如果数据库不存在，就创建数据库
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        insertGoodsInfo(sqLiteDatabase);        // 插入商品信息
-        insertPersonInfo(sqLiteDatabase);       // 插入用户信息
-        insertStepInfo(sqLiteDatabase);         // 插入步数信息
+        insertGoodsInfo(sqLiteDatabase);        // 创建商品信息
+        insertPersonInfo(sqLiteDatabase);       // 创建用户信息
+        insertStepInfo(sqLiteDatabase);         // 创建步数信息
 
     }
 
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertPersonInfo(SQLiteDatabase sqLiteDatabase){
-        String sql = "create table user(email varchar(20), name varchar(20), gender varchar(20), age int, height double, weight double)";
+        String sql = "create table user(email varchar(20), name varchar(20), gender varchar(20), birthday varchar(20), height int, weight int, address vachar(20))";
         sqLiteDatabase.execSQL(sql);
         Log.i(TAG, "insertGoodsInfo: 成功创建user表");
 

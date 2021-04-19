@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tc="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/activity_main"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -19,162 +21,261 @@
         android:layout_height="1dp"
         android:background="@color/light_blue"/>
 
-    <LinearLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:textColor="@color/main_text_color"
-            android:text="运动记录"/>
-
-        <RelativeLayout
-            android:background="@mipmap/ic_small_blue_rectangular"
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="步行+跑步距离"/>
+                android:textSize="15sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/main_text_color"
+                android:text="运动记录"/>
 
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:background="@mipmap/ic_small_blue_rectangular"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_margin="10dp"
+                    android:text="步行+跑步距离"/>
 
                 <LinearLayout
-                    android:layout_gravity="end"
-                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/movement_total_km_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="30sp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:text="公里"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_gravity="end"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/movement_total_km_time_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_gravity="end"
-                        android:textSize="12sp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp" />
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/movement_total_km_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:text="公里"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_gravity="end"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/movement_total_km_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp" />
 
 
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_marginTop="10dp"
-            android:background="@mipmap/ic_small_blue_rectangular"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/ic_small_blue_rectangular"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_margin="10dp"
+                    android:text="步数"/>
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_gravity="end"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/movement_total_steps_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:text="步"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_gravity="end"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/movement_total_steps_time_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:textSize="12sp"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+<!--            BMI-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="10dp"
+                android:background="@mipmap/ic_small_blue_rectangular"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+
+                <TextView
+                    android:id="@+id/tv_BMI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="46dp"
+                    android:layout_marginTop="16dp"
+                    android:text="BMI"
+                    tc:layout_constraintStart_toStartOf="parent"
+                    tc:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_CAL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="46dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="卡路里"
+                    tc:layout_constraintBottom_toBottomOf="parent"
+                    tc:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_BMI_RES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="113dp"
+                    android:layout_marginTop="16dp"
+                    android:text="TextView"
+                    tc:layout_constraintStart_toEndOf="@+id/tv_BMI"
+                    tc:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_CAL_RES"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="130dp"
+                    android:text="0KCal"
+                    tc:layout_constraintEnd_toEndOf="parent"
+                    tc:layout_constraintStart_toStartOf="@+id/tv_BMI_RES"
+                    tc:layout_constraintTop_toBottomOf="@+id/tv_BMI_RES" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
+                android:id="@+id/is_support_tv"
+                android:textSize="15sp"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_margin="10dp"
-                android:text="步数"/>
+                android:text="该设备不支持计步"/>
+
+            <!--        圆弧-->
 
             <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_gravity="end"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/movement_total_steps_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="30sp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:text="步"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_gravity="end"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/movement_total_steps_time_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:textSize="12sp"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp" />
-
-                </LinearLayout>
+                <com.dgut.dg.Utils.MyProgressView
+                    android:id="@+id/flow_prgress_view"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    tc:circleColor="@color/teal_200"
+                    tc:radius="120dp"
+                    tc:ringColor="@color/cardview_dark_background"
+                    tc:strokeWidth="6dp"
+                    android:layout_marginTop="10dp"/>
             </LinearLayout>
-        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/is_support_tv"
-            android:textSize="15sp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="该设备不支持计步"/>
+<!--            折线表-->
+            <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <lecho.lib.hellocharts.view.LineChartView
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_marginBottom="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
 </LinearLayout>

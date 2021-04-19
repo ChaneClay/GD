@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.dgut.dg.Activity.HomeActivity;
 import com.dgut.dg.Adapter.ShopCartAdapter;
+import com.dgut.dg.Dao.GoodsInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.DatabaseHelper;
 import com.dgut.dg.Utils.UtilTool;
@@ -71,12 +72,21 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
     private Map<String, List<GoodsInfo>> childs; //子元素的列表
 
     private View mMainView;
+    private GoodsInfoDao goodsInfoDao;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        mContext = getActivity();
+
+        goodsInfoDao = new GoodsInfoDao(mContext);
+
+        if (goodsInfoDao == null){
+            Log.i(TAG, "onCreateView: goodsInfoDao is null");
+        }
+        
 
         mMainView = inflater.inflate(R.layout.main, container, false);
         allCheckBox = mMainView.findViewById(R.id.all_checkBox);
@@ -92,7 +102,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         collectGoods.setOnClickListener(this);
         delGoods.setOnClickListener(this);
 
-        mContext = getActivity();
         initPtrFrame();
         initData();
         initEvents();
@@ -183,7 +192,11 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
     private void initData() {
 
-        GoodsInfo goodsInfo[] = new GoodsInfo().getGoodsInfo(mContext);
+//        GoodsInfo goodsInfo[] = new GoodsInfo().getGoodsInfo(mContext);
+
+        GoodsInfo goodsInfo[] = goodsInfoDao.getGoodsInfo();
+
+        Log.i(TAG, "initData: " + goodsInfo.length);
 
         // 代表一个店铺
         groups = new ArrayList<StoreInfo>();
@@ -326,7 +339,10 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
         ContentValues values = new ContentValues();
         values.put("count", count);
-        goodsInfo.setGoodsInfo(mContext, values, id);
+
+        goodsInfoDao.updateGoodsInfo(values, id);
+
+//        goodsInfo.setGoodsInfo(mContext, values, id);
 
         // 表面更新、实际更新
         // 更新数据
@@ -361,7 +377,10 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         values.put("isSub", "0");
         String id = child.get(childPosition).getId();
         GoodsInfo goodsInfo = child.get(childPosition);
-        goodsInfo.setGoodsInfo(mContext, values, id);
+
+//        goodsInfo.setGoodsInfo(mContext, values, id);
+
+        goodsInfoDao.updateGoodsInfo(values, id);
 
 
         Log.i(TAG, "onClick: childPosition is: " + childPosition);

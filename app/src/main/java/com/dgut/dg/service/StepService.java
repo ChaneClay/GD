@@ -31,7 +31,7 @@ import androidx.core.app.NotificationCompat;
 import com.dgut.dg.Fragment.PlanFragment;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.Constant;
-import com.dgut.dg.Utils.StepDataDao;
+import com.dgut.dg.Dao.StepDataDao;
 import com.dgut.dg.Utils.TimeUtil;
 import com.dgut.dg.entity.StepEntity;
 
@@ -82,8 +82,6 @@ public class StepService extends Service implements SensorEventListener {
     public void onCreate() {
         super.onCreate();
         initBroadcastReceiver();
-
-        Log.i(TAG, "onCreate: ---进入service");
 
         new Thread(new Runnable() {
             public void run() {
@@ -292,8 +290,6 @@ public class StepService extends Service implements SensorEventListener {
         Sensor detectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         if (countSensor != null) {
             stepSensor = 0;
-
-
             //这里注意一下
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else if (detectorSensor != null) {

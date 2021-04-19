@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activity.InfoDetailActivity"
+
     android:orientation="vertical"
     android:background="@color/white">
 
@@ -45,85 +46,36 @@
         android:clickable="true"
         android:orientation="vertical">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@android:color/white">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:gravity="center_vertical"
-                android:text="守护天使"
-                android:textColor="#DB4E61"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="66dp"
-                android:layout_toStartOf="@+id/imageView"
-                android:gravity="center_vertical"
-                android:text="暂时没有守护天使"
-                android:textColor="#C0C0C0"
-                android:textSize="14sp"/>
-
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="20dp"
-                android:paddingBottom="34dp"
-                android:paddingTop="34dp"
-                android:src="@mipmap/image02"/>
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_gravity="center"
             android:background="@android:color/white"
             android:orientation="horizontal">
+
             <TextView
-                android:gravity="center_vertical"
-                android:layout_width="80dp"
+                android:gravity="center"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:text="昵称" />
 
-            <EditText
-                android:hint="昵称"
-                android:layout_width="150dp"
-                android:layout_height="match_parent"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="个性签名"/>
-
-            <EditText
-                android:hint="昵称"
-                android:layout_width="150dp"
+                android:id="@+id/tv_name"
+                android:maxLines="1"
+                android:text="昵称"
+                android:gravity="center"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"/>
+
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
+
+
 
         <View
             android:layout_width="match_parent"
@@ -139,17 +91,25 @@
             android:background="@android:color/white"
             android:orientation="horizontal">
             <TextView
-                android:gravity="center_vertical"
+
+                android:gravity="center"
+                android:layout_width="60dp"
                 android:text="生日"
-                android:layout_width="80dp"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tv_birth"
-                android:gravity="center_vertical"
-                android:hint="生日日期"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="生日日期"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"/>
+
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
 <!--        性别-->
@@ -159,39 +119,28 @@
             android:background="@android:color/white"
             android:orientation="horizontal">
             <TextView
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="性别"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tv_gender"
-                android:gravity="center_vertical"
-                android:hint="性别"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="性别"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"/>
+
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
 
-<!--        身高、体重-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
-            <TextView
-                android:gravity="center_vertical"
-                android:text="身高、体重"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:id="@+id/tv_hei_wei"
-                android:gravity="center_vertical"
-                android:hint="身高、体重"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
 
 <!--        常住地址-->
         <LinearLayout
@@ -200,48 +149,111 @@
             android:background="@android:color/white"
             android:orientation="horizontal">
             <TextView
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:text="地址"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tv_address"
-                android:gravity="center_vertical"
-                android:hint="地址"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="地址"
+                android:layout_width="240dp"
                 android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"/>
 
-
+<!--        身高-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="horizontal">
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="缘分印象"
-                android:textColor="#C0C0C0"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="Ta还没有缘分印象"
-                android:textColor="#C0C0C0"/>
+                android:text="身高"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_height"
+                android:gravity="center"
+                android:text="身高"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
+
+<!--        体重-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:gravity="center"
+                android:text="体重"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/tv_weight"
+                android:gravity="center"
+                android:hint="体重"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:text="取消"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:text="保存"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 

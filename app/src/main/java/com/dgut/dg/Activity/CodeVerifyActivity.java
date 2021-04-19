@@ -40,6 +40,7 @@ public class CodeVerifyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         correctCode = bundle.getString("code");
+        email = bundle.getString("email");
 
 
 
@@ -66,6 +67,9 @@ public class CodeVerifyActivity extends AppCompatActivity {
                     // 直接跳转
                     Intent intent = new Intent(CodeVerifyActivity.this, HomeActivity.class);
 
+                    Bundle bundle = new Bundle();
+                    bundle.putString("email", email);
+                    intent.putExtras(bundle);
 
                     startActivity(intent);
 

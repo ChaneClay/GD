@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.dgut.dg.Activity.CodeVerifyActivity;
 import com.dgut.dg.Activity.HomeActivity;
+import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.entity.PersonalInfo;
 import com.dgut.dg.Utils.RandomData;
 import com.dgut.dg.Utils.SendEmail;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private long verificationCode=0;            //生成的验证码
     private String email;                       //邮箱
 
+//    private PersonalInfoDao personalInfoDao;
+//    private PersonalInfo personalInfo;
 
 
     @Override
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         //开启service
         SQLiteStudioService.instance().start(this);
+
+//        personalInfoDao = new PersonalInfoDao(getApplicationContext());
+//        personalInfo = personalInfoDao.getPersonalInfo();
 
         mEtMail = findViewById(R.id.et_mail);
         mBtnLogin = findViewById(R.id.btn_login);
@@ -80,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=mEtMail.getText().toString();
+                email = mEtMail.getText().toString();
 
                 RandomData rn = new RandomData();
                 verificationCode = rn.getRandomNumber(6);
@@ -89,12 +95,13 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, CodeVerifyActivity.class);
 
-
-
                 Bundle bundle = new Bundle();
 
                 bundle.putString("code", String.valueOf(verificationCode));
-                PersonalInfo.setEmail(email);
+                bundle.putString("email", email);
+
+//                personalInfo.setEmail(email);
+
                 intent.putExtras(bundle);
 
                 startActivity(intent);

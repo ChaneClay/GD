@@ -25,15 +25,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dgut.dg.Application.MyApplication;
+import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.Constant;
+import com.dgut.dg.Utils.MyProgressView;
 import com.dgut.dg.Utils.StepCountCheckUtil;
-import com.dgut.dg.Utils.StepDataDao;
+import com.dgut.dg.Dao.StepDataDao;
 import com.dgut.dg.Utils.TimeUtil;
 import com.dgut.dg.calendar.BeforeOrAfterCalendarView;
+import com.dgut.dg.entity.PersonalInfo;
 import com.dgut.dg.entity.StepEntity;
 import com.dgut.dg.service.StepService;
 
@@ -42,6 +48,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.animation.ChartAnimationListener;
+import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.ValueShape;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.Chart;
+import lecho.lib.hellocharts.view.LineChartView;
+
 
 
 public class PlanFragment extends Fragment implements Handler.Callback{
@@ -53,6 +91,15 @@ public class PlanFragment extends Fragment implements Handler.Callback{
     private TextView stepsTimeTv;
     private TextView totalStepsTv;
     private TextView supportTv;
+
+    private MyProgressView mTasksView;
+    private int DEFAULT_TOTAL_STEP = 10000;
+    private static int preStep = -1;
+
+    private double BMI = 0;
+    private double CAL = 0;
+    private TextView mTvBMI;
+    private TextView mTvCAL;
 
     /**
      * 屏幕长度和宽度
@@ -67,6 +114,18 @@ public class PlanFragment extends Fragment implements Handler.Callback{
     private StepDataDao stepDataDao;
 
     private Context mContext;
+    private PersonalInfoDao personalInfoDao;
+    private PersonalInfo personalInfo;
+
+
+    // 折线表
+    private LineChartView chart;
+    private final int maxNumberOfLines = 4;
+    private final int numberOfPoints = 7;
+    private final int number=60;
+    float[][] randomNumbersTab = new float[maxNumberOfLines][numberOfPoints];
+    private ValueShape shape = ValueShape.CIRCLE;
+
 
 
     @Override
@@ -74,6 +133,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
                              Bundle savedInstanceState) {
 
         mContext = getContext();
+        personalInfoDao = new PersonalInfoDao(mContext);
+        personalInfo = personalInfoDao.getPersonalInfo(MyApplication.getCurrEmail());
 
         if (ContextCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
@@ -87,12 +148,67 @@ public class PlanFragment extends Fragment implements Handler.Callback{
 
         View view = inflater.inflate(R.layout.fragment_plan, container, false);
 
-
         initView(view);
         initData();
         initListener();
 
+        // 折线表
+        generateValues();
+        generateData();
+        resetViewport();
+
         return view;
+    }
+
+    //设置y轴的值从left到number
+    private void resetViewport() {
+        final Viewport v = new Viewport(chart.getMaximumViewport());
+        v.bottom = 0;
+        v.top = number;
+        v.left = 0;
+        v.right = numberOfPoints - 1;
+        chart.setMaximumViewport(v);
+        chart.setCurrentViewport(v);
+    }
+
+    private void generateValues() {
+        for (int i = 0; i < maxNumberOfLines; ++i) {
+            for (int j = 0; j < numberOfPoints; ++j) {
+                randomNumbersTab[i][j] = (float) Math.random() * number;
+            }
+        }
+    }
+
+    private void generateData() {
+        List<Line> lines = new ArrayList<Line>();
+        List<AxisValue> axisXValues = new ArrayList<AxisValue>();
+        for (int i = 0; i <= numberOfPoints; i++)
+            axisXValues.add(i, new AxisValue(i).setLabel("星期"+i));
+        int numberOfLines = 1;
+        for (int i = 0; i < numberOfLines; ++i) {
+            List<PointValue> values = new ArrayList<PointValue>();
+            for (int j = 0; j < numberOfPoints; j++) {
+                values.add(new PointValue(j, randomNumbersTab[i][j]));
+            }
+
+            Line line = new Line(values);
+            line.setColor(ChartUtils.pickColor());    //设置颜色随机
+            line.setShape(shape);           //设置形状
+            line.setCubic(true);            //设置线为曲线，反之为折线
+            line.setFilled(true);           //设置填满
+            line.setHasLabels(true);        //显示便签
+            line.setHasLines(true);
+            line.setHasPoints(true);
+            lines.add(line);
+        }
+
+        LineChartData data = new LineChartData(lines);
+
+        data.setAxisXBottom(new Axis(axisXValues).setHasLines(true).setTextColor(Color.BLACK).setName("时间").setHasTiltedLabels(true).setMaxLabelChars(4));
+        data.setAxisYLeft(new Axis().setHasLines(true).setName("卡路里").setTextColor(Color.BLACK).setMaxLabelChars(2));
+        data.setBaseValue(Float.NEGATIVE_INFINITY);
+        chart.setLineChartData(data);
+
     }
 
 
@@ -105,10 +221,40 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         totalStepsTv = view.findViewById(R.id.movement_total_steps_tv);
         supportTv = view.findViewById(R.id.is_support_tv);
 
+
+
+        // 触发
+        mTasksView = view.findViewById(R.id.flow_prgress_view);
+        mTasksView.setUsedFlow("目标: "+DEFAULT_TOTAL_STEP + "步数");
+
+        // BMI
+        mTvBMI = view.findViewById(R.id.tv_BMI_RES);
+        mTvCAL = view.findViewById(R.id.tv_CAL_RES);
+
+        // 折线表
+        chart=view.findViewById(R.id.chart);
+
+
         curSelDate = TimeUtil.getCurrentDate();
     }
 
+    // 这里开始
+    public void beginAnim(int total, int curr){
+
+        if (preStep != curr && curr !=  total){
+            mTasksView.setmShowProgress(total, curr);
+            preStep = curr;
+        }else if (total == curr){
+            Toast.makeText(getContext(), "恭喜，你完成目标了!", Toast.LENGTH_SHORT).show();
+        }else {
+            Log.i("TAG", "beginAnim: current step: " + curr);
+        }
+    }
+
+
+
     private void initData() {
+
         WindowManager windowManager = getActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         screenWidth = display.getWidth();
@@ -117,6 +263,19 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         //放到获取宽度之后
         calenderView = new BeforeOrAfterCalendarView(mContext);
         movementCalenderLl.addView(calenderView);
+
+        // 计算BMI
+        if (personalInfo != null){
+            double height = personalInfo.getHeight() * 0.01;
+
+            int weight = personalInfo.getWeight();
+            BMI = weight / (height * height);
+            BMI = Math.round(BMI*100) * 0.01;
+            mTvBMI.setText(BMI+"");
+
+        }
+
+
         /**
          * 这里判断当前设备是否支持计步
          */
@@ -126,7 +285,14 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             setDatas();
             setupService();
         } else {
+
+            // ***
+
+            beginAnim(DEFAULT_TOTAL_STEP, 0);
             totalStepsTv.setText("0");
+
+            Log.i("TAG", "initData: 更新步数 -0-   "+0);
+
             supportTv.setVisibility(View.VISIBLE);
         }
     }
@@ -159,8 +325,6 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         mContext.startService(intent);
         isBind = mContext.bindService(intent, conn, Service.BIND_AUTO_CREATE);
 
-        Log.i("TAG", "setupService: --- isBind" + isBind);
-        Log.i("TAG", "setupService: ---准备进入service");
     }
 
     /**
@@ -223,18 +387,33 @@ public class PlanFragment extends Fragment implements Handler.Callback{
      *
      */
     private void setDatas() {
-        StepEntity stepEntity = stepDataDao.getCurDataByDate(curSelDate);
 
-        if (stepEntity != null) {
+
+        StepEntity stepEntity;
+
+        if (stepDataDao != null && (stepEntity = stepDataDao.getCurDataByDate(curSelDate) )!= null) {
             int steps = Integer.parseInt(stepEntity.getSteps());
+
+            // ***
 
             //获取全局的步数
             totalStepsTv.setText(String.valueOf(steps));
+
+            beginAnim(DEFAULT_TOTAL_STEP, steps);
+            Log.i("TAG", "initData: 更新步数 -1-   "+steps);
+
             //计算总公里数
             totalKmTv.setText(countTotalKM(steps));
         } else {
+
+            // ***
+
+            beginAnim(DEFAULT_TOTAL_STEP, 0);
             //获取全局的步数
             totalStepsTv.setText("0");
+
+            Log.i("TAG", "initData: 更新步数 -2-   "+0);
+
             //计算总公里数
             totalKmTv.setText("0");
         }
@@ -276,6 +455,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
 
 
 
+    // 接受service 传递过来的数据更新步数
+
     @Override
     public boolean handleMessage(@NonNull Message msg) {
         switch (msg.what) {
@@ -285,9 +466,22 @@ public class PlanFragment extends Fragment implements Handler.Callback{
                 //如果是今天则更新数据
                 if (curSelDate.equals(TimeUtil.getCurrentDate())) {
                     //记录运动步数
+
                     int steps = msg.getData().getInt("steps");
                     //设置的步数
+
+
+                    CAL = Math.round(personalInfo.getWeight()/2000 * steps * 100) * 0.01;
+
+                    mTvCAL.setText(CAL+"KCal");
+
+                    // ***
                     totalStepsTv.setText(String.valueOf(steps));
+                    beginAnim(DEFAULT_TOTAL_STEP, steps);
+
+                    Log.i("TAG", "handleMessage: handler每次调用 " + steps);
+
+
                     //计算总公里数
                     totalKmTv.setText(countTotalKM(steps));
                 }

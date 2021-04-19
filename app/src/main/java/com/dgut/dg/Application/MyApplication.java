@@ -9,11 +9,23 @@ public class MyApplication {
     private static String emailPassword;
     private static String emailUserName;
 
+    public static String getCurrEmail() {
+        return currEmail;
+    }
+
+    public static void setCurrEmail(String currEmail) {
+        MyApplication.currEmail = currEmail;
+    }
+
+    private static String currEmail;
+
+
     static {
         url = "http://v.juhe.cn/toutiao/index?type=&page=&page_size=&key=45a4c8a211a9f35ca031e22a93c1fc77";
         emailUser = "ak51507@163.com";
         emailUserName = "ak51507";
         emailPassword = "JIUUSSCFPKWYKTWG";
+        currEmail = "215099895@qq.com";
 
     }
 

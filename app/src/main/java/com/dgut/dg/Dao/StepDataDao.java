@@ -1,4 +1,4 @@
-package com.dgut.dg.Utils;
+package com.dgut.dg.Dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
+import com.dgut.dg.Utils.DatabaseHelper;
 import com.dgut.dg.entity.StepEntity;
 
 import java.util.ArrayList;

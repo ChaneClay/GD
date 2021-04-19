@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dgut.dg.Activity.ShopDetailsActivity;
+import com.dgut.dg.Dao.GoodsInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.ScreenUtils;
 import com.dgut.dg.entity.GoodsInfo;
@@ -27,11 +28,15 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
     private Context mContext;
     GoodsInfo goodsInfo[];
 
+    private GoodsInfoDao goodsInfoDao;
+
 
     public ShopDetailRecyclerViewAdapter(Context context) {
 
         this.mContext = context;
-        goodsInfo = new GoodsInfo().getGoodsInfo(mContext);
+        goodsInfoDao = new GoodsInfoDao(context);
+        goodsInfo = goodsInfoDao.getGoodsInfo();
+
 
     }
 
