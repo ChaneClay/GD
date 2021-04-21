@@ -1,7 +1,5 @@
 package com.dgut.dg.Adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.dgut.dg.Fragment.ForumFragment;
 import com.dgut.dg.Fragment.MsgContentFragment;
 import com.dgut.dg.Fragment.VideoTutorialFragment;
-import com.dgut.dg.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +48,8 @@ public class VideoTutorialFragmentAdapter extends FragmentPagerAdapter {
 
                 break;
             case 2:
-                fragment = new MsgContentFragment();
+                // 论坛
+                fragment = new ForumFragment();
                 break;
         }
 

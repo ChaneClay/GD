@@ -16,18 +16,12 @@
     <string name="order_total" translatable="false">合计 :</string>
 
 
-
-
-
-
     <!--    个人信息（编辑信息）-->
     <string name="my_id">ID号</string>
     <string name="my_name2">昵称</string>
     <string name="my_region">地区</string>
     <string name="my_gender">性别</string>
     <string name="my_brithday">生日</string>
-
-
 
 
 </resources>

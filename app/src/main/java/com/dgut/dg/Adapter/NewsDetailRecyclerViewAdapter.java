@@ -14,17 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
 import com.dgut.dg.Activity.NewsDetailsActivity;
-import com.dgut.dg.Activity.VideoDetailsActivity;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.NewsBean;
-import com.dgut.dg.Utils.VideoBean;
-import com.google.gson.annotations.SerializedName;
+
 
 import java.util.List;
 

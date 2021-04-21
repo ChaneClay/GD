@@ -285,14 +285,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             setDatas();
             setupService();
         } else {
-
-            // ***
-
             beginAnim(DEFAULT_TOTAL_STEP, 0);
             totalStepsTv.setText("0");
-
-            Log.i("TAG", "initData: 更新步数 -0-   "+0);
-
             supportTv.setVisibility(View.VISIBLE);
         }
     }
@@ -355,11 +349,7 @@ public class PlanFragment extends Fragment implements Handler.Callback{
                         messenger = new Messenger(service);
                         Message msg = Message.obtain(null, Constant.MSG_FROM_CLIENT);
                         msg.replyTo = mGetReplyMessenger;
-
-//                        Looper.prepare();
                         messenger.send(msg);
-//                        Looper.loop();
-
                     } catch (RemoteException e) {
                         e.printStackTrace();
                     }
@@ -400,7 +390,6 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             totalStepsTv.setText(String.valueOf(steps));
 
             beginAnim(DEFAULT_TOTAL_STEP, steps);
-            Log.i("TAG", "initData: 更新步数 -1-   "+steps);
 
             //计算总公里数
             totalKmTv.setText(countTotalKM(steps));
@@ -411,8 +400,6 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             beginAnim(DEFAULT_TOTAL_STEP, 0);
             //获取全局的步数
             totalStepsTv.setText("0");
-
-            Log.i("TAG", "initData: 更新步数 -2-   "+0);
 
             //计算总公里数
             totalKmTv.setText("0");

@@ -47,7 +47,6 @@ public class VideoDetailsActivity extends AppCompatActivity {
 
     private List<Bitmap> bitmapList;
 
-
     private MyAdapter adapter;
 
     private JzvdStd mJzView;
@@ -154,6 +153,14 @@ public class VideoDetailsActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
 
 //                mImageView.setImageBitmap(bitmapList.get(position));
+
+                Log.i(TAG, "onItemClick: ---------------------");
+
+                Log.i(TAG, "onItemClick: playUrl " + playUrl);
+                Log.i(TAG, "onItemClick: title " + title);
+                Log.i(TAG, "onItemClick: thumbUrl " + thumbUrl);
+
+                Log.i(TAG, "onItemClick: ---------------------");
 
                 view.setBackgroundColor(Color.parseColor("#AA024DA4"));
                 JzvdStd jzvdStd = findViewById(R.id.cus_jz_video);

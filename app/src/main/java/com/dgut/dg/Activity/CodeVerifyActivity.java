@@ -42,9 +42,6 @@ public class CodeVerifyActivity extends AppCompatActivity {
         correctCode = bundle.getString("code");
         email = bundle.getString("email");
 
-
-
-
         mEtCode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -80,9 +77,6 @@ public class CodeVerifyActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     class OnClick implements View.OnClickListener{

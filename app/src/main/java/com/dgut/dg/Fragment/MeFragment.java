@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dgut.dg.Activity.InfoDetailActivity;
+import com.dgut.dg.Application.MyApplication;
 import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.entity.PersonalInfo;
@@ -34,7 +35,7 @@ public class MeFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_me, container, false);
 
         personalInfoDao = new PersonalInfoDao(getContext());
-        personalInfo = personalInfoDao.getPersonalInfo();
+        personalInfo = personalInfoDao.getPersonalInfo(MyApplication.getCurrEmail());
 
 
         mTvEmail = view.findViewById(R.id.tv_email);

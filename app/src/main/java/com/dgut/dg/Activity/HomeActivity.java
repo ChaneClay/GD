@@ -42,7 +42,6 @@ public class HomeActivity extends AppCompatActivity {
             , R.drawable.tab_main_me_selector};
 
     PersonalInfoDao personalInfoDao;
-//    PersonalInfo personalInfo;
 
     String TAG = "HomeActivity";
 

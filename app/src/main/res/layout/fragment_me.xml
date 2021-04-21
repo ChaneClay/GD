@@ -23,7 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="120dp">
 
-            <ImageView
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView2"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.125"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:src="@mipmap/head"/>-->
+
+            <com.dgut.dg.Utils.RoundImageView
                 android:id="@+id/imageView2"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -33,6 +44,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@mipmap/head"/>
+
+<!--            <com.dgut.dg.Utils.RoundImageView-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:src="@mipmap/head" >-->
+<!--            </com.dgut.dg.Utils.RoundImageView>-->
 
             <TextView
                 android:id="@+id/tv_name"

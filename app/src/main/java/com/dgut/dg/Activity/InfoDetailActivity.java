@@ -41,6 +41,7 @@ import com.dgut.dg.R;
 import com.dgut.dg.Utils.CardBean;
 import com.dgut.dg.Utils.GetJsonDataUtil;
 import com.dgut.dg.Utils.JsonBean;
+import com.dgut.dg.Utils.RoundImageView;
 import com.dgut.dg.entity.PersonalInfo;
 import com.google.gson.Gson;
 
@@ -51,8 +52,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import static com.dgut.dg.Activity.NewsDetailsActivity.TAG;
 
 
 public class InfoDetailActivity extends Activity implements View.OnClickListener{
@@ -111,8 +110,6 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     private static final int MSG_LOAD_SUCCESS = 0x0002;
     private static final int MSG_LOAD_FAILED = 0x0003;
 
-    private static boolean isLoaded = false;
-
 
 
     @Override
@@ -121,10 +118,11 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_info_detail);
 
         personalInfoDao = new PersonalInfoDao(getApplicationContext());
-        personalInfo = personalInfoDao.getPersonalInfo();
+        personalInfo = personalInfoDao.getPersonalInfo(MyApplication.getCurrEmail());
 
         initView();
         initData();
+
 
 
     }
@@ -262,27 +260,12 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
             contentValues.put("address", mAddress.getText()+"");
 
             String height = mHeight.getText()+"";
-
-            Log.i(TAG, "onClick: height is ---- " + height);
             int real_height = Integer.parseInt(height.replace("cm", ""));
-            Log.i(TAG, "onClick: real_height is ---- " + real_height);
-
             contentValues.put("height", real_height);
-            Log.i(TAG, "onClick: real_height" + real_height);
-
 
             String weight = mWeight.getText() + "";
-
-
-            Log.i(TAG, "onClick: weight is ---- " + weight);
             int real_weight = Integer.parseInt(weight.replace("kg", ""));
-            Log.i(TAG, "onClick: real_weight is ---- " + real_weight);
-
-
-
             contentValues.put("weight", real_weight);
-            Log.i(TAG, "onClick: real_weight" + real_weight);
-
 
             personalInfo = personalInfoDao.updatePersonalInfo(contentValues, MyApplication.getCurrEmail());
             initData();
@@ -304,9 +287,7 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
             }
 
             intent.putExtras(bundle);
-
             startActivityForResult(intent, 0x123);
-
 
         }else {
             Log.e("TAG", "onClick: 没有符合条件的" );

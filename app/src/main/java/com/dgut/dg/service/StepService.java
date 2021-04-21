@@ -117,7 +117,8 @@ public class StepService extends Service implements SensorEventListener {
         // 这里注意一下
         nfIntent = new Intent(this, PlanFragment.class);
 
-        String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
+//        String NOTIFICATION_CHANNEL_ID = "com.example.simpleapp";
+        String NOTIFICATION_CHANNEL_ID = "com.dgut.dg";
         String channelName = "My Background Service";
         NotificationChannel chan = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

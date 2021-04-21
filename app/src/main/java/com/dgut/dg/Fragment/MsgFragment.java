@@ -32,8 +32,6 @@ public class MsgFragment extends Fragment {
     private List<String> names;
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,6 @@ public class MsgFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_msg, container, false);
         ButterKnife.bind(this, view);
 
-//        adapter = new MsgContentFragmentAdapter(getChildFragmentManager());
         adapter = new NewsAdapter(getChildFragmentManager());
 
         viewPager.setAdapter(adapter);

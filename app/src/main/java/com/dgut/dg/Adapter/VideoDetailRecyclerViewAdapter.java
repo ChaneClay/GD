@@ -96,8 +96,6 @@ public class VideoDetailRecyclerViewAdapter extends RecyclerView.Adapter<VideoDe
             Log.i(TAG, "onBindViewHolder: 数据为空");
         }
 
-
-
     }
 
 

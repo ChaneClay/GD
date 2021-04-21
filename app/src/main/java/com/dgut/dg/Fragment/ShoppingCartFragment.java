@@ -83,11 +83,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
         goodsInfoDao = new GoodsInfoDao(mContext);
 
-        if (goodsInfoDao == null){
-            Log.i(TAG, "onCreateView: goodsInfoDao is null");
-        }
-        
-
         mMainView = inflater.inflate(R.layout.main, container, false);
         allCheckBox = mMainView.findViewById(R.id.all_checkBox);
         goPay = mMainView.findViewById(R.id.go_pay);
@@ -132,10 +127,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
                         initData();
                         initEvents();
 
-//                        StoreInfo group = groups.get(0);
-//                        List<GoodsInfo> child = childs.get(group.getId());
-
-
                         adapter.notifyDataSetChanged();
 
                     }
@@ -172,17 +163,22 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
                 int firstVisiablePostion=view.getFirstVisiblePosition();
                 int top=-1;
                 View firstView=view.getChildAt(firstVisibleItem);
-                UtilsLog.i("childCount="+view.getChildCount());//返回的是显示层面上的所包含的子view的个数
+//                UtilsLog.i("childCount="+view.getChildCount());//返回的是显示层面上的所包含的子view的个数
                 if(firstView!=null){
+                    Log.i(TAG, "onScroll: 0000000000");
                     top=firstView.getTop();
                 }
-                UtilsLog.i("firstVisiableItem="+firstVisibleItem+",fistVisiablePosition="+firstVisiablePostion+",firstView="+firstView+",top="+top);
+//                UtilsLog.i("firstVisiableItem="+firstVisibleItem+",fistVisiablePosition="+firstVisiablePostion+",firstView="+firstView+",top="+top);
+
                 if(firstVisibleItem==0&&top==0){
                     mPtrFrame.setEnabled(true);
+
                 }else{
+                    Log.i(TAG, "onScroll: 222222222222");
                     mPtrFrame.setEnabled(false);
                 }
             }

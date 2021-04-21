@@ -20,21 +20,18 @@ public class GoodsInfoDao {
         databaseHelper = new DatabaseHelper(context);
     }
 
-
+    // 获取个人信息
     public GoodsInfo[] getGoodsInfo() {
-
         db = databaseHelper.getWritableDatabase();
 
         int N=8;
         GoodsInfo goodsInfo[] = new GoodsInfo[N];
-
 
         String query = "select * from goods";
         Cursor cursor = db.rawQuery(query, null);
 
         int i=0;
         while(cursor.moveToNext()){
-
             String id = cursor.getString(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             Boolean isSelected = cursor.getInt(cursor.getColumnIndex("isSelected")) == 0 ? false:true;
@@ -57,7 +54,7 @@ public class GoodsInfoDao {
         return goodsInfo;
     }
 
-
+    //更新个人信息
     public GoodsInfo updateGoodsInfo(ContentValues values, String id) {
         db = databaseHelper.getReadableDatabase();
         db.update("goods", values, "id=?", new String[]{id});
