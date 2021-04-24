@@ -100,7 +100,7 @@
 
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -117,7 +117,7 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+                app:layout_constraintTop_toBottomOf="@+id/tv_date">
 
                 <ImageView
                     android:src="@drawable/reg_product"

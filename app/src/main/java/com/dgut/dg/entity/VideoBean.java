@@ -1,4 +1,4 @@
-package com.dgut.dg.Utils;
+package com.dgut.dg.entity;
 
 import java.util.List;
 

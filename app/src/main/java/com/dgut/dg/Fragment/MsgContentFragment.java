@@ -23,7 +23,6 @@ public class MsgContentFragment extends Fragment {
     private String name;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

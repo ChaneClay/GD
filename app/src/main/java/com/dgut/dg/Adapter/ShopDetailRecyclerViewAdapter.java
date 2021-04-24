@@ -45,9 +45,7 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
     @Override
     public LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-
         return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_shopview, parent, false));
-
     }
 
     @Override
@@ -55,7 +53,7 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
 
 
         int pos = position % goodsInfo.length;
-        holder.mGoodsPrice.setText(String.valueOf(goodsInfo[pos].getPrice()));
+        holder.mGoodsPrice.setText("￥"+String.valueOf(goodsInfo[pos].getPrice()));
         holder.mGoodsDecs.setText(goodsInfo[pos].getDesc());
 
 
@@ -99,7 +97,6 @@ public class ShopDetailRecyclerViewAdapter extends RecyclerView.Adapter<ShopDeta
                 mContext.startActivity(intent, bundle);
             }
         });
-
 
     }
 

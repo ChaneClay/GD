@@ -35,8 +35,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         String detailUrl = bundle.getString("url");
 
-
-
         mWvDetail = findViewById(R.id.wv_detail);
 
         mWvDetail.loadUrl(detailUrl);
@@ -48,7 +46,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
     }
 

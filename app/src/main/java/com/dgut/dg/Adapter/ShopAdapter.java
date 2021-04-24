@@ -23,8 +23,6 @@ public class ShopAdapter extends FragmentPagerAdapter {
     private List<String> names;
 
 
-    String TAG = "ShopAdapter";
-
     public ShopAdapter(@NonNull FragmentManager fm) {
         super(fm);
         this.names = new ArrayList<>();

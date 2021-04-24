@@ -14,12 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.dgut.dg.Adapter.VideoDetailRecyclerViewAdapter;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.HttpUtils;
-import com.dgut.dg.Utils.VideoBean;
+import com.dgut.dg.entity.VideoBean;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

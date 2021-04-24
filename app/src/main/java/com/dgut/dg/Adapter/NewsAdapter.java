@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.dgut.dg.Fragment.CollectFragment;
 import com.dgut.dg.Fragment.MsgContentFragment;
 import com.dgut.dg.Fragment.NewsFragment;
 import com.dgut.dg.Fragment.VideoTutorialFragment;
@@ -45,13 +46,9 @@ public class NewsAdapter extends FragmentPagerAdapter {
                 fragment = new NewsFragment();
                 break;
             case 1:
-                fragment = new MsgContentFragment();
+                fragment = new CollectFragment();
                 break;
 
-            default:
-
-                fragment = new MsgContentFragment();
-                break;
         }
 
 

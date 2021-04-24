@@ -100,7 +100,6 @@ public class VideoDetailsActivity extends AppCompatActivity {
 
 
     private void init() {
-//        mImageView = (ImageView)findViewById(R.id.imageView);
 
         mJzView = findViewById(R.id.cus_jz_video);
 

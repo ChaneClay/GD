@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.dgut.dg.Fragment.ForumFragment;
 import com.dgut.dg.Fragment.MsgContentFragment;
+import com.dgut.dg.Fragment.SubscribeFragment;
 import com.dgut.dg.Fragment.VideoTutorialFragment;
 
 import java.util.ArrayList;
@@ -40,19 +41,14 @@ public class VideoTutorialFragmentAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 fragment = new VideoTutorialFragment();
-                System.out.println("--"+0);
                 break;
             case 1:
-                fragment = new MsgContentFragment();
-                System.out.println("--"+1);
-
+                fragment = new SubscribeFragment();
                 break;
             case 2:
-                // 论坛
                 fragment = new ForumFragment();
                 break;
         }
-
 
 
         Bundle bundle = new Bundle();

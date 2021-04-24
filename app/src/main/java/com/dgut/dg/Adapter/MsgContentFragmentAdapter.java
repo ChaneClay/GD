@@ -41,9 +41,7 @@ public class MsgContentFragmentAdapter extends FragmentPagerAdapter {
 
         MsgContentFragment fragment = new MsgContentFragment();
         Bundle bundle = new Bundle();
-//        内容
         bundle.putString("name", names.get(position));
-//        bundle.putString("name", position+"");
 
 
         fragment.setArguments(bundle);

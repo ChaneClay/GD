@@ -88,13 +88,13 @@ public class PlanFragment extends Fragment implements Handler.Callback{
     private LinearLayout movementCalenderLl;
     private TextView kmTimeTv;
     private TextView totalKmTv;
-    private TextView stepsTimeTv;
-    private TextView totalStepsTv;
+//    private TextView stepsTimeTv;
+//    private TextView totalStepsTv;
     private TextView supportTv;
 
     private MyProgressView mTasksView;
     private int DEFAULT_TOTAL_STEP = 10000;
-    private static int preStep = -1;
+    private static int preStep;
 
     private double BMI = 0;
     private double CAL = 0;
@@ -132,13 +132,14 @@ public class PlanFragment extends Fragment implements Handler.Callback{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        preStep = -1;
+
         mContext = getContext();
         personalInfoDao = new PersonalInfoDao(mContext);
         personalInfo = personalInfoDao.getPersonalInfo(MyApplication.getCurrEmail());
 
         if (ContextCompat.checkSelfPermission(mContext,
                 Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) {
-            //ask for permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{ Manifest.permission.ACTIVITY_RECOGNITION }, 12345);
             }else {
@@ -217,8 +218,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         movementCalenderLl = view.findViewById(R.id.movement_records_calender_ll);
         kmTimeTv = view.findViewById(R.id.movement_total_km_time_tv);
         totalKmTv = view.findViewById(R.id.movement_total_km_tv);
-        stepsTimeTv = view.findViewById(R.id.movement_total_steps_time_tv);
-        totalStepsTv = view.findViewById(R.id.movement_total_steps_tv);
+//        stepsTimeTv = view.findViewById(R.id.movement_total_steps_time_tv);
+//        totalStepsTv = view.findViewById(R.id.movement_total_steps_tv);
         supportTv = view.findViewById(R.id.is_support_tv);
 
 
@@ -241,6 +242,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
     // 这里开始
     public void beginAnim(int total, int curr){
 
+        Log.i("TAG", "beginAnim: ----------------你进来了: " + curr + "-----"+ preStep);
+
         if (preStep != curr && curr !=  total){
             mTasksView.setmShowProgress(total, curr);
             preStep = curr;
@@ -249,6 +252,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         }else {
             Log.i("TAG", "beginAnim: current step: " + curr);
         }
+
+
     }
 
 
@@ -276,6 +281,8 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         }
 
 
+
+
         /**
          * 这里判断当前设备是否支持计步
          */
@@ -285,8 +292,12 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             setDatas();
             setupService();
         } else {
+
+            // ***
+
+            mTvCAL.setText(0+"KCal");
             beginAnim(DEFAULT_TOTAL_STEP, 0);
-            totalStepsTv.setText("0");
+//            totalStepsTv.setText("0");
             supportTv.setVisibility(View.VISIBLE);
         }
     }
@@ -387,8 +398,10 @@ public class PlanFragment extends Fragment implements Handler.Callback{
             // ***
 
             //获取全局的步数
-            totalStepsTv.setText(String.valueOf(steps));
+//            totalStepsTv.setText(String.valueOf(steps));
 
+            CAL = Math.round(personalInfo.getWeight()*1.0/2000 * steps * 100) * 0.01;
+            mTvCAL.setText(CAL+"KCal");
             beginAnim(DEFAULT_TOTAL_STEP, steps);
 
             //计算总公里数
@@ -397,10 +410,12 @@ public class PlanFragment extends Fragment implements Handler.Callback{
 
             // ***
 
+            mTvCAL.setText(0+"KCal");
             beginAnim(DEFAULT_TOTAL_STEP, 0);
             //获取全局的步数
-            totalStepsTv.setText("0");
+//            totalStepsTv.setText("0");
 
+            mTvCAL.setText(0+"KCal");
             //计算总公里数
             totalKmTv.setText("0");
         }
@@ -408,7 +423,7 @@ public class PlanFragment extends Fragment implements Handler.Callback{
         //设置时间
         String time = TimeUtil.getWeekStr(curSelDate);
         kmTimeTv.setText(time);
-        stepsTimeTv.setText(time);
+//        stepsTimeTv.setText(time);
     }
 
     /**
@@ -457,17 +472,16 @@ public class PlanFragment extends Fragment implements Handler.Callback{
                     int steps = msg.getData().getInt("steps");
                     //设置的步数
 
+                    // ***
 
-                    CAL = Math.round(personalInfo.getWeight()/2000 * steps * 100) * 0.01;
-
+                    CAL = Math.round(personalInfo.getWeight()*1.0/2000 * steps * 100) * 0.01;
                     mTvCAL.setText(CAL+"KCal");
 
-                    // ***
-                    totalStepsTv.setText(String.valueOf(steps));
+
+//                    totalStepsTv.setText(String.valueOf(steps));
                     beginAnim(DEFAULT_TOTAL_STEP, steps);
 
                     Log.i("TAG", "handleMessage: handler每次调用 " + steps);
-
 
                     //计算总公里数
                     totalKmTv.setText(countTotalKM(steps));

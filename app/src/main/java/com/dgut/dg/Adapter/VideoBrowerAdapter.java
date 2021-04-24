@@ -32,7 +32,6 @@ public class VideoBrowerAdapter extends BaseAdapter {
     private Context mContext;
     private boolean isGood = false;
 
-    private TextView thumpUpView;
 
     public VideoBrowerAdapter(LinkedList<VideoInfo> aData, Context mContext){
         this.aData = aData;
@@ -73,6 +72,8 @@ public class VideoBrowerAdapter extends BaseAdapter {
             holder.mContainer = convertView.findViewById(R.id.mContainer); //拿到布局，用于动态添加View
 
             holder.jzvdStd = convertView.findViewById(R.id.cus_jz_video);
+            holder.tvLike = convertView.findViewById(R.id.tv_like);
+            holder.tvComment = convertView.findViewById(R.id.tv_comment);
 
 
             convertView.setTag(holder);
@@ -86,14 +87,30 @@ public class VideoBrowerAdapter extends BaseAdapter {
         holder.videoDescripation.setText(aData.get(position).getVideoDescripation());
         holder.videoPosition.setText(aData.get(position).getPosition());
 
+        String thumbUrl = null;
+        if (position %2 == 0){
+            thumbUrl = "https://p26-tt.byteimg.com/img/pgc-image/e2e926254ab14fa287ace53faface364~tplv-obj.image";
+            holder.tvLike.setText("456");
+            holder.tvComment.setText("36");
 
-//        String playUrl = "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=239018&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss&udid=";
-        String title = "可口可乐励志广告：年龄不是我的弱点";
-        String thumbUrl = "http://img.kaiyanapp.com/6b0ebb43a12dbaa8972ebc45997d0737.png?imageMogr2/quality/60/format/jpg";
-
-
+        }else {
+            thumbUrl = "https://upyun.wefitos.com/post/202101/161102348746788.jpg";
+            holder.tvLike.setText("109");
+            holder.tvComment.setText("15");
+        }
         holder.jzvdStd.setUp(aData.get(position).getVideoPath(), "");
         Glide.with(holder.jzvdStd.getContext()).load(thumbUrl).into(holder.jzvdStd.thumbImageView);
+
+
+//        String playUrl = "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=239018&resourceType=video&editionType=default&source=aliyun&playUrlType=url_oss&udid=";
+//        String title = "可口可乐励志广告：年龄不是我的弱点";
+//        String thumbUrl = "http://img.kaiyanapp.com/6b0ebb43a12dbaa8972ebc45997d0737.png?imageMogr2/quality/60/format/jpg";
+//        thumbUrl = "https://p1-tt-ipv6.byteimg.com/origin/pgc-image/bdd232dbff7b475ca2ca6916bf70c890";
+        thumbUrl = "https://p26-tt.byteimg.com/img/pgc-image/e2e926254ab14fa287ace53faface364~tplv-obj.image";
+        thumbUrl = "https://upyun.wefitos.com/post/202101/161102348746788.jpg";
+
+//        holder.jzvdStd.setUp(aData.get(position).getVideoPath(), "");
+//        Glide.with(holder.jzvdStd.getContext()).load(thumbUrl).into(holder.jzvdStd.thumbImageView);
 
 
         //点赞
@@ -101,16 +118,13 @@ public class VideoBrowerAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (!isGood){
-                    holder.video_iv_good.setImageResource(R.mipmap.video_share_good_select);
-//                    addThumpUpView(holder);
+                    holder.video_iv_good.setImageResource(R.mipmap.heart_like);
                     Toast.makeText(mContext, "点赞成功！", Toast.LENGTH_SHORT).show();
                     isGood = true;
                 }else {
-                    holder.video_iv_good.setImageResource(R.mipmap.video_share_good);
-//                    removeThumpUpView(holder);
+                    holder.video_iv_good.setImageResource(R.mipmap.heart_default);
                     isGood = false;
                 }
-
             }
         });
 
@@ -170,6 +184,8 @@ public class VideoBrowerAdapter extends BaseAdapter {
 
 
         JzvdStd jzvdStd;
+        TextView tvLike;
+        TextView tvComment;
 
     }
 

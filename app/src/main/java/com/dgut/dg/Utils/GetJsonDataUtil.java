@@ -7,13 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- * <读取Json文件的工具类>
- *
- * @author: 小嵩
- * @date: 2017/3/16 16:22
-
- */
 
 public class GetJsonDataUtil {
 

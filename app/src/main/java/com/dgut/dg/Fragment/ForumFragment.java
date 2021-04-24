@@ -53,9 +53,10 @@ public class ForumFragment extends Fragment {
         videoAvatars = new int[]{R.drawable.head_picture,R.mipmap.video_avatar_02,
                 R.mipmap.video_avatar_03,R.mipmap.video_avatar_04,R.drawable.head_picture,R.mipmap.video_avatar_02,
                 R.mipmap.video_avatar_03,R.mipmap.video_avatar_04};
-        usernames = new String[]{"xiaok","小张","王小明","李晓华","xiaok","小张","王小明","李晓华"};
-        videoDates = new String[]{"刚刚","09月17日10:12","08月22日18:15","08月22日17:42","刚刚","09月17日10:12","08月22日18:15","08月22日17:42"};
-        videoDescripation = new String[]{"#测试1.1# 童年卢本伟","#测试1.2# 川普","#测试1.3# 李云龙","#测试1.4# 奥利给","#测试1.1# 童年卢本伟","#测试1.2# 川普","#测试1.3# 李云龙","#测试1.4# 奥利给"};
+        usernames = new String[]{"_张姑娘","Alen_华","程曦不坏","本美一七八","陈海诺Leo","Janet","骑行君","Xuanily"};
+        videoDates = new String[]{"08月22日08:02","09月17日07:12","08月22日18:15","08月22日17:42","刚刚","09月17日10:12","08月22日18:15","08月22日17:42"};
+        videoDescripation = new String[]{"早！\n越来越早起，越来越晚睡","清晨的景色还是很美的，跑完感觉神清气爽\n加油！",
+                "很累\n不过感觉很棒！","#测试1.4# 奥利给","#测试1.1# 童年卢本伟","#测试1.2# 川普","#测试1.3# 李云龙","#测试1.4# 奥利给"};
         videoPaths = new String[]{
                 "https://www.bilibili.com/video/av80588467",
                 "https://www.bilibili.com/video/av77275486?spm_id_from=333.5.b_6b696368696b755f6775696465.18",

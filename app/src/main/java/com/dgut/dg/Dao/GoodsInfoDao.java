@@ -24,7 +24,7 @@ public class GoodsInfoDao {
     public GoodsInfo[] getGoodsInfo() {
         db = databaseHelper.getWritableDatabase();
 
-        int N=8;
+        int N=10;
         GoodsInfo goodsInfo[] = new GoodsInfo[N];
 
         String query = "select * from goods";

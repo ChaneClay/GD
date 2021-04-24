@@ -1,6 +1,5 @@
 package com.dgut.dg.Activity;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -10,13 +9,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,13 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.CustomListener;
-import com.bigkoo.pickerview.listener.OnOptionsSelectChangeListener;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
@@ -38,10 +31,9 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.dgut.dg.Application.MyApplication;
 import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
-import com.dgut.dg.Utils.CardBean;
+import com.dgut.dg.entity.CardBean;
 import com.dgut.dg.Utils.GetJsonDataUtil;
-import com.dgut.dg.Utils.JsonBean;
-import com.dgut.dg.Utils.RoundImageView;
+import com.dgut.dg.entity.JsonBean;
 import com.dgut.dg.entity.PersonalInfo;
 import com.google.gson.Gson;
 
@@ -79,8 +71,6 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
 
 
     // 详细信息
-
-
     private TextView mTvGender;     // 性别
     private TextView mAddress;      // 地址
     private TextView mBirth;        // 生日
@@ -102,7 +92,6 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
     private ArrayList<String> computer = new ArrayList<>();
 
     // 地址解析
-
     private List<JsonBean> options1Items = new ArrayList<>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();
@@ -122,8 +111,6 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
 
         initView();
         initData();
-
-
 
     }
 
@@ -190,48 +177,52 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
 
 
 
-        myScrollLinearLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        //按下的Y的位置
-                        Y = (int) event.getRawY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        int nowY = (int) myScrollLinearLayout.getY(); //拖动界面的Y轴位置
-                        int tempY = (int) (event.getRawY() - Y); //手移动的偏移量
-                        Y = (int) event.getRawY();
-                        if ((nowY + tempY >= 0) && (nowY + tempY <= scrollViewDistanceToTop)) {
-                            if ((nowY + tempY <= menuBarHeight)&& (topMenuFlag == true) ){
-                                userInfo_topBar.setVisibility(View.VISIBLE);
-                                topMenuFlag = false;
-                            } else if ((nowY + tempY > menuBarHeight) && (topMenuFlag == flag)) {
-                                userInfo_topBar.setVisibility(View.INVISIBLE);
-                                topMenuFlag = true;
-                            }
-                            int temp = position += tempY;
-                            myScrollLinearLayout.setY(temp);
-                            int headViewTemp = headViewPosition += (tempY/5);
-                            mainHeadView.setY(headViewTemp);
-                        }
-                        //顶部的动画效果
-                        if ((myScrollLinearLayout.getY() <= chufaHeight) && (flag == true)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainHeadView, "alpha", 1, 0.0f);
-                            anim.setDuration(500);
-                            anim.start();
-                            flag = false;
-                        } else if ((myScrollLinearLayout.getY() > chufaHeight + 40) && (flag == false)) {
-                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainHeadView, "alpha", 0.0f, 1f);
-                            anim.setDuration(500);
-                            anim.start();
-                            flag = true;
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
+//        myScrollLinearLayout.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        //按下的Y的位置
+//                        Y = (int) event.getRawY();
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        int nowY = (int) myScrollLinearLayout.getY(); //拖动界面的Y轴位置
+//                        int tempY = (int) (event.getRawY() - Y); //手移动的偏移量
+//                        Y = (int) event.getRawY();
+//                        if ((nowY + tempY >= 0) && (nowY + tempY <= scrollViewDistanceToTop)) {
+//                            if ((nowY + tempY <= menuBarHeight)&& (topMenuFlag == true) ){
+//                                userInfo_topBar.setVisibility(View.VISIBLE);
+//                                topMenuFlag = false;
+//
+//                            } else if ((nowY + tempY > menuBarHeight) && (topMenuFlag == flag)) {
+//                                userInfo_topBar.setVisibility(View.INVISIBLE);
+//                                topMenuFlag = true;
+//                            }
+//
+//                            int temp = position += tempY;
+//                            myScrollLinearLayout.setY(temp);
+//                            int headViewTemp = headViewPosition += (tempY/5);
+//                            mainHeadView.setY(headViewTemp);
+//                        }
+//
+//
+//                        //顶部的动画效果
+//                        if ((myScrollLinearLayout.getY() <= chufaHeight) && (flag == true)) {
+//                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainHeadView, "alpha", 1, 0.0f);
+//                            anim.setDuration(500);
+//                            anim.start();
+//                            flag = false;
+//                        } else if ((myScrollLinearLayout.getY() > chufaHeight + 40) && (flag == false)) {
+//                            ObjectAnimator anim = ObjectAnimator.ofFloat(mainHeadView, "alpha", 0.0f, 1f);
+//                            anim.setDuration(500);
+//                            anim.start();
+//                            flag = true;
+//                        }
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
     }
 
 
@@ -612,6 +603,8 @@ public class InfoDetailActivity extends Activity implements View.OnClickListener
         String JsonData = new GetJsonDataUtil().getJson(this, "province.json");//获取assets目录下的json文件数据
 
         ArrayList<JsonBean> jsonBean = parseData(JsonData);//用Gson 转成实体
+
+
 
         /**
          * 添加省份数据

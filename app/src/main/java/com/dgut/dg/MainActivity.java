@@ -29,13 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEtMail;
     private Button mBtnReg;
 
-    String TAG = "mmm";
 
     private long verificationCode=0;            //生成的验证码
     private String email;                       //邮箱
-
-//    private PersonalInfoDao personalInfoDao;
-//    private PersonalInfo personalInfo;
 
 
     @Override
@@ -46,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         //开启service
         SQLiteStudioService.instance().start(this);
-
-//        personalInfoDao = new PersonalInfoDao(getApplicationContext());
-//        personalInfo = personalInfoDao.getPersonalInfo();
 
         mEtMail = findViewById(R.id.et_mail);
         mBtnLogin = findViewById(R.id.btn_login);
@@ -99,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
                 bundle.putString("code", String.valueOf(verificationCode));
                 bundle.putString("email", email);
-
-//                personalInfo.setEmail(email);
 
                 intent.putExtras(bundle);
 

@@ -46,8 +46,6 @@ public class MeFragment extends Fragment {
         mTvEmail.setText(personalInfo.getEmail());
         mTvName.setText(personalInfo.getName());
 
-
-
         mInfoDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

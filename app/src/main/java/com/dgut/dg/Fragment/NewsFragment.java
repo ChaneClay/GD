@@ -15,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dgut.dg.Adapter.NewsDetailRecyclerViewAdapter;
+import com.dgut.dg.Dao.NewsEntityDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.HttpUtils;
-import com.dgut.dg.Utils.NewsBean;
+import com.dgut.dg.entity.NewsBean;
 import com.dgut.dg.Application.MyApplication;
+import com.dgut.dg.entity.NewsEntity;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -28,52 +30,23 @@ import java.util.List;
 public class NewsFragment extends Fragment {
 
     RecyclerView recyclerView;
-    List<NewsBean.ResultDTO.DataDTO> mDatas;
     NewsDetailRecyclerViewAdapter adapter;
 
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
+    NewsEntityDao newsEntityDao;
+    ArrayList<NewsEntity> newsEntities;
 
-            if (msg.what == 0x111){
-
-                mDatas.clear();
-                String json = (String) msg.obj;
-                NewsBean newsBean = new Gson().fromJson(json, NewsBean.class);
-//                NewsBean newsBean = null;
-
-                if(newsBean != null){
-                    NewsBean.ResultDTO result = newsBean.getResult();
-                    if (result != null){
-                        List<NewsBean.ResultDTO.DataDTO> data = result.getData();
-                        for (int i=0; i<data.size(); i++){
-                            mDatas.add(data.get(i));
-                        }
-                    }
-
-                }
-
-                adapter.notifyDataSetChanged();
-
-                }
-            }
-
-
-    };
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 配置信息，切勿外传
-        String url = new MyApplication().getUrl();
+        // 新数据
+        newsEntityDao = new NewsEntityDao(getContext());
+        newsEntities = (ArrayList<NewsEntity>) newsEntityDao.getNewsEntity();
 
-        mDatas = new ArrayList<>();
-        loadData(url);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,8 +54,8 @@ public class NewsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
-        adapter = new NewsDetailRecyclerViewAdapter(getActivity(), mDatas);
 
+        adapter = new NewsDetailRecyclerViewAdapter(getActivity(), newsEntities);
 
         recyclerView = view.findViewById(R.id.rv_news);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -92,20 +65,20 @@ public class NewsFragment extends Fragment {
         return view;
     }
 
-    private void loadData(String url) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String json = HttpUtils.getJsonContent(url);
-
-                Message message = new Message();
-                message.what = 0x111;
-                message.obj = json;
-                handler.sendMessage(message);
-
-
-            }
-        }).start();
-
-    }
+//    private void loadData(String url) {
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                String json = HttpUtils.getJsonContent(url);
+//
+//                Message message = new Message();
+//                message.what = 0x111;
+//                message.obj = json;
+//                handler.sendMessage(message);
+//
+//
+//            }
+//        }).start();
+//
+//    }
 }

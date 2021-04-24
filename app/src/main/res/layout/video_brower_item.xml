@@ -57,9 +57,10 @@
                 android:id="@+id/video_descripation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:padding="8dp"
+                android:lineSpacingExtra="3dp"
+                android:layout_marginTop="7dp"
                 android:textSize="16sp"
-                android:textColor="#000000"
                 android:text="#共迎冬奥# 冬奥"/>
 
             <cn.jzvd.JzvdStd
@@ -88,7 +89,7 @@
                     android:layout_height="20dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_comment"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@mipmap/video_share_comment" />
 
@@ -98,28 +99,28 @@
                     android:layout_height="20dp"
                     android:layout_marginEnd="11dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView4"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_like"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/video_share_good" />
+                    app:srcCompat="@mipmap/heart_default" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/tv_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="32dp"
                     android:textSize="10sp"
-                    android:text="800"
+                    android:text="231"
                     app:layout_constraintBottom_toBottomOf="@+id/video_iv_good"
                     app:layout_constraintEnd_toStartOf="@+id/video_iv_comment"
                     app:layout_constraintTop_toTopOf="@+id/video_iv_good" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tv_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="26dp"
                     android:textSize="10sp"
-                    android:text="500"
+                    android:text="56"
                     app:layout_constraintBottom_toBottomOf="@+id/video_iv_comment"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/video_iv_comment" />

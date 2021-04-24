@@ -17,6 +17,7 @@ tools:context=".Fragment.FindFragment">
     app:tabIndicatorHeight="0dip"
     app:tabMinWidth="100dip"
     app:tabMode="fixed"
+
     app:tabPaddingEnd="5dip"
     app:tabPaddingStart="5dip"
     app:tabSelectedTextColor="@color/wx_head_selected"

@@ -98,8 +98,6 @@ public class ShopDetailsActivity extends AppCompatActivity implements GradationS
                 // 直接返回更新后的对象
                 goodsInfo = goodsInfoDao.updateGoodsInfo(values, String.valueOf(id));
 
-//                goodsInfo = goodsInfo.setGoodsInfo(getApplicationContext(), values, String.valueOf(id));
-
             }
         });
 

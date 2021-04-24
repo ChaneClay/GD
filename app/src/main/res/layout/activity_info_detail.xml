@@ -10,15 +10,16 @@
 
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="260dp">
 
         <!--        滑动过程中显示出来的图片-->
-        <com.dgut.dg.Utils.RoundImageView
-            android:src="@mipmap/head"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_dark_background"/>
+<!--        <com.dgut.dg.Utils.RoundImageView-->
+<!--            android:src="@mipmap/head"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/cardview_dark_background"/>-->
 
         <LinearLayout
             android:id="@+id/mainHeadView"

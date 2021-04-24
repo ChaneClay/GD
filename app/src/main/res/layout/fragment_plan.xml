@@ -52,7 +52,7 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:layout_margin="10dp"
-                    android:text="步行+跑步距离"/>
+                    android:text="运动距离"/>
 
                 <LinearLayout
                     android:layout_margin="10dp"
@@ -107,71 +107,71 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:background="@mipmap/ic_small_blue_rectangular"
-                android:layout_width="match_parent"
-                android:layout_height="100dp">
+<!--            <RelativeLayout-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:background="@mipmap/ic_small_blue_rectangular"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:layout_margin="10dp"
-                    android:text="步数"/>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:text="步数"/>-->
 
-                <LinearLayout
-                    android:layout_margin="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+<!--                <LinearLayout-->
+<!--                    android:layout_margin="10dp"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <LinearLayout
-                        android:layout_gravity="end"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <TextView
-                            android:id="@+id/movement_total_steps_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="30sp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textColor="@color/white"/>
+<!--                        <TextView-->
+<!--                            android:id="@+id/movement_total_steps_tv"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:textSize="30sp"-->
+<!--                            android:layout_marginLeft="5dp"-->
+<!--                            android:layout_marginRight="5dp"-->
+<!--                            android:textColor="@color/white"/>-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textColor="@color/white"
-                            android:text="步"/>
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:textSize="16sp"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:text="步"/>-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                    <LinearLayout
-                        android:layout_gravity="end"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:layout_gravity="end"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <TextView
-                            android:id="@+id/movement_total_steps_time_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:textSize="12sp"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/movement_total_steps_time_tv"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="end"-->
+<!--                            android:textSize="12sp"-->
+<!--                            android:textColor="@color/white"-->
+<!--                            android:layout_marginLeft="5dp"-->
+<!--                            android:layout_marginRight="5dp" />-->
 
-                    </LinearLayout>
-                </LinearLayout>
-            </RelativeLayout>
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+<!--            </RelativeLayout>-->
 
 <!--            BMI-->
 
@@ -186,9 +186,11 @@
                     android:id="@+id/tv_BMI"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="46dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="BMI"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
                     tc:layout_constraintStart_toStartOf="parent"
                     tc:layout_constraintTop_toTopOf="parent" />
 
@@ -196,9 +198,11 @@
                     android:id="@+id/tv_CAL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="46dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="卡路里"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
                     tc:layout_constraintBottom_toBottomOf="parent"
                     tc:layout_constraintStart_toStartOf="parent" />
 
@@ -206,22 +210,23 @@
                     android:id="@+id/tv_BMI_RES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="113dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="240dp"
                     android:text="TextView"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
                     tc:layout_constraintStart_toEndOf="@+id/tv_BMI"
-                    tc:layout_constraintTop_toTopOf="parent" />
+                    tc:layout_constraintTop_toTopOf="@+id/tv_BMI" />
 
                 <TextView
                     android:id="@+id/tv_CAL_RES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="130dp"
                     android:text="0KCal"
-                    tc:layout_constraintEnd_toEndOf="parent"
-                    tc:layout_constraintStart_toStartOf="@+id/tv_BMI_RES"
-                    tc:layout_constraintTop_toBottomOf="@+id/tv_BMI_RES" />
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tc:layout_constraintBottom_toBottomOf="@+id/tv_CAL"
+                    tc:layout_constraintEnd_toEndOf="@+id/tv_BMI_RES"
+                    tc:layout_constraintStart_toStartOf="@+id/tv_BMI_RES" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

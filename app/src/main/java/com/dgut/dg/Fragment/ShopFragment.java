@@ -39,7 +39,7 @@ public class ShopFragment extends Fragment {
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
-
         return view;
     }
+
 }

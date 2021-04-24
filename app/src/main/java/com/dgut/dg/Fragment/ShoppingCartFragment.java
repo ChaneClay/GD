@@ -163,22 +163,16 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                int firstVisiablePostion=view.getFirstVisiblePosition();
                 int top=-1;
                 View firstView=view.getChildAt(firstVisibleItem);
-//                UtilsLog.i("childCount="+view.getChildCount());//返回的是显示层面上的所包含的子view的个数
                 if(firstView!=null){
-                    Log.i(TAG, "onScroll: 0000000000");
                     top=firstView.getTop();
                 }
-//                UtilsLog.i("firstVisiableItem="+firstVisibleItem+",fistVisiablePosition="+firstVisiablePostion+",firstView="+firstView+",top="+top);
 
-                if(firstVisibleItem==0&&top==0){
+                if(firstVisibleItem==0 && top==0){
                     mPtrFrame.setEnabled(true);
 
                 }else{
-                    Log.i(TAG, "onScroll: 222222222222");
                     mPtrFrame.setEnabled(false);
                 }
             }
@@ -188,11 +182,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
 
     private void initData() {
 
-//        GoodsInfo goodsInfo[] = new GoodsInfo().getGoodsInfo(mContext);
-
         GoodsInfo goodsInfo[] = goodsInfoDao.getGoodsInfo();
 
-        Log.i(TAG, "initData: " + goodsInfo.length);
 
         // 代表一个店铺
         groups = new ArrayList<StoreInfo>();
@@ -210,11 +201,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
             }
         }
 
-
         //一个键值对应一个商家，一个商家对应多个货物
         childs.put(groups.get(0).getId(), goods);
-
-        Log.i(TAG, "initData: 初始化数据initData");
 
 
     }
@@ -249,10 +237,8 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
             child.get(i).setSelected(isChecked);
         }
         if (isCheckAll()) {
-            Log.i(TAG, "checkGroup: 全选----");
             allCheckBox.setChecked(true);//全选
         } else {
-            Log.i(TAG, "checkGroup: 反选----");
             allCheckBox.setChecked(false);//反选
         }
         adapter.notifyDataSetChanged();
@@ -337,8 +323,6 @@ public class ShoppingCartFragment extends Fragment implements View.OnClickListen
         values.put("count", count);
 
         goodsInfoDao.updateGoodsInfo(values, id);
-
-//        goodsInfo.setGoodsInfo(mContext, values, id);
 
         // 表面更新、实际更新
         // 更新数据

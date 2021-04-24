@@ -22,11 +22,18 @@ import com.dgut.dg.Application.MyApplication;
 import com.dgut.dg.Dao.PersonalInfoDao;
 import com.dgut.dg.R;
 import com.dgut.dg.Utils.DatabaseHelper;
+import com.dgut.dg.Utils.GetJsonDataUtil;
+import com.dgut.dg.entity.NewsEntity;
 import com.dgut.dg.entity.PersonalInfo;
 import com.dgut.dg.Utils.RandomData;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -70,7 +77,6 @@ public class HomeActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         if (bundle == null){
-
             //不通过邮箱直接进来的
             email = MyApplication.getCurrEmail();
         }else {
@@ -78,36 +84,94 @@ public class HomeActivity extends AppCompatActivity {
             MyApplication.setCurrEmail(email);
         }
 
-
-
-
         getSupportActionBar().hide();
         ButterKnife.bind(this);
-
-        // 数据库操作
-        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this);
-        DatabaseHelper dbHelper2 = new DatabaseHelper(HomeActivity.this, "test_db");
-
-
-
-        db = dbHelper.getWritableDatabase();
-
-        personalInfoDao = new PersonalInfoDao(getApplicationContext());
-//        personalInfo = personalInfoDao.getPersonalInfo();
-
-        // 插入个人信息
-        insertData();
-
-        // 插入货物信息
-        insertGoodsInfo();
-
         initPager();
         setTabs(tabLayout, getLayoutInflater(), TAB_TITLES, TAB_IMGS);
 
 
+        // 数据库操作
+        DatabaseHelper dbHelper = new DatabaseHelper(HomeActivity.this);
+        DatabaseHelper dbHelper2 = new DatabaseHelper(HomeActivity.this, "test_db");
+        db = dbHelper.getWritableDatabase();
+
+        personalInfoDao = new PersonalInfoDao(getApplicationContext());
+
+        // 插入个人信息
+        insertData();
+        // 插入货物信息
+        insertGoodsInfo();
+        // 插入资讯
+        insertNewsEntity();
 
 
     }
+
+    // 插入资讯
+    private void insertNewsEntity() {
+        String query = "select * from news";
+        Cursor cursor = db.rawQuery(query, null);
+        String result = "";
+        boolean flag = false;
+
+        while (cursor.moveToNext()){
+            result =  cursor.getString(cursor.getColumnIndex("id"));
+            if (result.equals("0")){
+                flag = true;
+                break;
+            }
+        }
+
+        if (!flag){
+            List<NewsEntity> dataList = initJsonData();
+            for (int i = 0; i < dataList.size(); i++) {
+
+                ContentValues contentValues = new ContentValues();
+
+                contentValues.put("id", dataList.get(i).getId());
+                contentValues.put("date", dataList.get(i).getDate());
+                contentValues.put("thumbUrl", dataList.get(i).getThumbUrl());
+                contentValues.put("title", dataList.get(i).getTitle());
+                contentValues.put("url", dataList.get(i).getUrl());
+                contentValues.put("isSel", dataList.get(i).getIsSel());
+
+                long rowId = db.insert("news", null, contentValues);
+                if (rowId != 0){
+                    Log.i(TAG, "insertNewsEntity: 成功插入"+ (i+1) +"条数据！");
+                }
+
+
+            }
+
+        }
+
+
+
+    }
+
+    public ArrayList<NewsEntity> parseData(String result) {//Gson 解析
+        ArrayList<NewsEntity> detail = new ArrayList<>();
+        try {
+            JSONArray data = new JSONArray(result);
+            Gson gson = new Gson();
+            for (int i = 0; i < data.length(); i++) {
+                NewsEntity entity = gson.fromJson(data.optJSONObject(i).toString(), NewsEntity.class);
+                detail.add(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return detail;
+    }
+
+    public ArrayList<NewsEntity> initJsonData(){
+        String JsonData = new GetJsonDataUtil().getJson(getApplicationContext(), "news.json");//获取assets目录下的json文件数据
+        ArrayList<NewsEntity> jsonBean = parseData(JsonData);     //用Gson 转成实体
+        return jsonBean;
+    }
+
+
+
 
     // 插入货物信息
     public void insertGoodsInfo(){
@@ -130,24 +194,53 @@ public class HomeActivity extends AppCompatActivity {
         if (!flag){
 
             int[] img = new int[]{R.mipmap.image01,R.mipmap.image02,R.mipmap.image03,R.mipmap.image04,
-                    R.mipmap.image05,R.mipmap.image06,R.mipmap.image07,R.mipmap.image08};
+                    R.mipmap.image05,R.mipmap.image06,R.mipmap.image07,R.mipmap.image08,R.mipmap.image09,R.mipmap.image10};
+
+
+
+
 
             //数据的数量
             int N=img.length;
+            int row = N;
+            int col = 5;
+            String [][]GoodsMessage = {
+                    // 名字   描述  价格  原价格 颜色
+                {"燃脂跳绳手胶版", "燃脂跳绳手胶版，吸汗防滑，手感舒适，给你舒适的运动体验！", "29", "39", "红色"},
+                {"燃脂跳绳通用版", "轻盈好跳，随身便携，可调长短，软质球体不缠绕，减少噪音", "39", "99", "黑色"},
+                {"弹力绳套组", "天然乳胶管材质，拉力均匀，抗老化；随时随地地开展家庭健身", "119", "149", "黑色"},
+                {"肌肉放松泡沫轴 经典款/便携款", "滚走肌肉酸痛，滚出纤细身材！软硬适中，拒绝刺痛感", "59", "99", "蓝色"},
+                {"防滑导汗发带", "内附硅胶条，防滑不紧绷，无惧汗水打扰", "19", "19", "棕色"},
+                {"专业铸铁壶铃", "全身发力，塑形燃脂！4种，重量，任你挑选", "89", "199", "黑色"},
+                {"智能手环B2会员版", "彩显大屏，14天续航，5ATM防水等级，手环游戏模式，卡路里管家", "99", "99", "黑色"},
+                {"天然橡胶瑜伽垫3mm", "轻薄轻巧， 方便携带，防滑吸汗，高阶习练，户外瑜伽首选！", "179", "199", "绿色"},
+                {"智能跑步机K2", "全新能量回弹跑板，智能调节跑速，开合折叠轻松收纳，语音指导，满足不同跑步需求！", "2599", "3099", "黑色"},
+                {"智能动感单车C1 Lite", "为家庭减脂而生，精致小巧，高回弹座椅，快捷高度调节，智能调阻，静音不占地", "2099", "2699", "灰色"},
+
+            };
+
+
 
             for(int i =0; i<N; i++){
                 ContentValues contentValues = new ContentValues();
 
                 contentValues.put("id", i);
-                contentValues.put("name", "GoodsName");
+
+                contentValues.put("name", GoodsMessage[i][0]);
+
                 contentValues.put("isSelected", 0);
                 contentValues.put("imageUrl", "https://python.com");
-                contentValues.put("descGoods", "beautiful");
-                contentValues.put("price", 5 + new Random().nextInt(10));
-                contentValues.put("prime_price", 1555.0 + new Random().nextInt(3000));
+
+                contentValues.put("descGoods", GoodsMessage[i][1]);
+
+                contentValues.put("price", Integer.parseInt(GoodsMessage[i][2]));
+                contentValues.put("prime_price", Integer.parseInt(GoodsMessage[i][3]));
+
                 contentValues.put("position", new Random().nextInt(20));
-                contentValues.put("count", 1);
-                contentValues.put("color", "red");
+                contentValues.put("count", new Random().nextInt(20)+10);
+
+                contentValues.put("color", GoodsMessage[i][4]);
+
                 contentValues.put("size", "10");
                 contentValues.put("goodsImg", img[i%img.length]);
                 contentValues.put("isSub", 0);
@@ -163,10 +256,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void insertData(){
-
-
-
-
         String query = new StringBuilder().append("select * from user where email = '")
                 .append(email).append("'").toString();
         Cursor cursor = db.rawQuery(query, null);
@@ -175,9 +264,7 @@ public class HomeActivity extends AppCompatActivity {
         boolean flag = false;
 
         while (cursor.moveToNext()){
-            Log.i(TAG, "insertData: 进入while");
             result =  cursor.getString(cursor.getColumnIndex("email"));
-
             if (result.equals(email)){
                 flag = true;
                 break;
@@ -198,13 +285,10 @@ public class HomeActivity extends AppCompatActivity {
             contentValues.put("weight", 65);
             contentValues.put("address", "广东省东莞市");
 
-
             personalInfoDao.insertPersonalInfo(contentValues);
             Log.i(TAG, "insertData: 新用户，成功插入数据");
 
         }
-
-
 
     }
 

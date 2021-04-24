@@ -60,8 +60,7 @@ public class MsgFragment extends Fragment {
         names = new ArrayList<>();
         names.add("推荐");
         names.add("收藏");
-        names.add("热点");
-        names.add("视频");
+
     }
 
 }

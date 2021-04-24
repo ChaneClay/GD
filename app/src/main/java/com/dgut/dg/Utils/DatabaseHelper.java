@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
@@ -39,7 +38,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertGoodsInfo(sqLiteDatabase);        // 创建商品信息
         insertPersonInfo(sqLiteDatabase);       // 创建用户信息
         insertStepInfo(sqLiteDatabase);         // 创建步数信息
+        insertNewsEntity(sqLiteDatabase);       // 创建资讯信息
+    }
 
+    private void insertNewsEntity(SQLiteDatabase sqLiteDatabase) {
+        String sql = "create table news(id varchar(5), date varchar(20), thumbUrl varchar(50)," +
+                "title varchar(20), url varchar(20), isSel int)";
+        sqLiteDatabase.execSQL(sql);
+        Log.e(TAG, "insertNewsEntity: 成功创建news表");
     }
 
     private void insertGoodsInfo(SQLiteDatabase sqLiteDatabase) {
@@ -48,13 +54,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "prime_price double, position int, count int," +
                 "color varchar(10), size varchar(10), goodsImg int, isSub int)";
         sqLiteDatabase.execSQL(sql);
-        Log.i(TAG, "insertGoodsInfo: 成功创建goods表");
+        Log.e(TAG, "insertGoodsInfo: 成功创建goods表");
     }
 
     public void insertPersonInfo(SQLiteDatabase sqLiteDatabase){
         String sql = "create table user(email varchar(20), name varchar(20), gender varchar(20), birthday varchar(20), height int, weight int, address vachar(20))";
         sqLiteDatabase.execSQL(sql);
-        Log.i(TAG, "insertGoodsInfo: 成功创建user表");
+        Log.e(TAG, "insertPersonInfo: 成功创建user表");
 
     }
 
@@ -66,9 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "totalSteps TEXT)";
 
         sqLiteDatabase.execSQL(sql);
-        Log.i(TAG, "insertGoodsInfo: 成功创建step表");
-
-
+        Log.e(TAG, "insertStepInfo: 成功创建step表");
 
     }
 
